@@ -1,0 +1,139 @@
+{
+  "script_types": [
+    {
+      "name": "pipeline_init",
+      "output_path": "python/",
+      "extension": ".sh"
+    },
+    {
+      "name": "python",
+      "output_path": "python/",
+      "extension": "/processing.py"
+    },
+    {
+      "name": "python_init",
+      "output_path": "python/",
+      "extension": "/main.py"
+    }
+  ],
+  "rules": [
+    {
+      "name": "Model_registry",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "pipeline_init"
+    },
+    {
+      "name": "Model_registry",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "python_init"
+    },
+    {
+      "name": "Model_registry",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "python"
+    },
+    {
+      "name": "Data_repository",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "pipeline_init"
+    },
+    {
+      "name": "Data_repository",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "python_init"
+    },
+    {
+      "name": "Data_repository",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "python"
+    },
+    {
+      "name": "Data_streaming",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "pipeline_init"
+    },
+    {
+      "name": "Data_streaming",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "python_init"
+    },
+    {
+      "name": "Data_streaming",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "python"
+    },
+    {
+      "name": "Xai_serving",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "pipeline_init"
+    },
+    {
+      "name": "Xai_serving",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "python_init"
+    },
+    {
+      "name": "Xai_serving",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "python"
+    },
+    {
+      "name": "Model_selection",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "pipeline_init"
+    },
+    {
+      "name": "Model_selection",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "python_init"
+    }
+  ],
+  "model_registry": {
+    "pipeline_init": "{% if DATA_TYPE==\"Time-Series\" %}\n\n    kubectl cp python/model_registry/. {{ml_serving_pod_2}}:/\n    kubectl cp tools/mlflow_config/. {{ml_serving_pod_2}}:/\n    kubectl exec {{ml_serving_pod_2}}  -- pip install -r /requirements.txt\n    kubectl exec {{ml_serving_pod_2}}  -- python3 /main.py\n    {% endif %}",
+    "python_init": "{% if DATA_TYPE==\"Time-Series\" %}\n\nimport mlflow\nimport mlflow.tensorflow\nimport tensorflow as tf\nfrom tensorflow import keras\nfrom tensorflow.keras import layers\nimport pandas as pd\nimport numpy as np\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import MinMaxScaler\nimport joblib\nimport tempfile\nimport os\nfrom statsmodels.tsa.arima.model import ARIMA\nimport xgboost as xgb\nfrom sklearn.ensemble import RandomForestRegressor\n\npath = \"monthly_hourly_load_values_2022_DE.csv\"\ndf = pd.read_csv(path, delimiter=\";\", parse_dates=[\"TimeTo\"], index_col=\"TimeTo\")\n\nscaler = MinMaxScaler()\ndf[\"Value\"] = scaler.fit_transform(df[[\"Value\"]])\n\ndef create_sequences(data, seq_length):\n    sequences, labels = [], []\n    for i in range(len(data) - seq_length):\n        sequences.append(data[i:i + seq_length])\n        labels.append(data[i + seq_length])\n    return np.array(sequences), np.array(labels)\n\nseq_length = 24\nX, y = create_sequences(df[\"Value\"].values, seq_length)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, shuffle=False)\n\nmlflow.set_tracking_uri(\"http://\"+ml_flow_service_service_1_ip)\n\ndef train_and_log_model(model_name, model, X_train, y_train, X_test, y_test):\n    mlflow.set_experiment(f\"{model_name}_TimeSeries\")\n    with mlflow.start_run():\n        if model_name in [\"LSTM\", \"GRU\"]:\n            history = model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=50, batch_size=16, verbose=0)\n            mlflow.tensorflow.log_model(model, f\"{model_name}_model\")\n        elif model_name == \"ARIMA\":\n            model_fit = model.fit()\n            with tempfile.TemporaryDirectory() as temp_dir:\n                model_path = os.path.join(temp_dir, \"arima_model.pkl\")\n                joblib.dump(model_fit, model_path)\n                mlflow.log_artifact(model_path, \"model\")\n        else:\n            model.fit(X_train.reshape(X_train.shape[0], -1), y_train)\n            with tempfile.TemporaryDirectory() as temp_dir:\n                model_path = os.path.join(temp_dir, f\"{model_name}_model.pkl\")\n                joblib.dump(model, model_path)\n                mlflow.log_artifact(model_path, \"model\")\n\n        model_uri = f\"runs:/{mlflow.active_run().info.run_id}/model\"\n        client = mlflow.tracking.MlflowClient()\n        try:\n            model_version = mlflow.register_model(model_uri, f\"{model_name}_TimeSeries\").version\n            client.transition_model_version_stage(name=f\"{model_name}_TimeSeries\", version=model_version, stage=\"Production\")\n        except Exception as e:\n            print(f\"Model registration failed: {e}\")\n\n# LSTM\nlstm_model = keras.Sequential([\n    layers.LSTM(50, activation=\"relu\", return_sequences=True, input_shape=(seq_length, 1)),\n    layers.LSTM(50, activation=\"relu\"),\n    layers.Dense(1)\n])\nlstm_model.compile(optimizer=\"adam\", loss=\"mse\", metrics=[\"mae\"])\ntrain_and_log_model(\"LSTM\", lstm_model, X_train, y_train, X_test, y_test)\n\n# GRU\ngru_model = keras.Sequential([\n    layers.GRU(50, activation=\"relu\", return_sequences=True, input_shape=(seq_length, 1)),\n    layers.GRU(50, activation=\"relu\"),\n    layers.Dense(1)\n])\ngru_model.compile(optimizer=\"adam\", loss=\"mse\", metrics=[\"mae\"])\ntrain_and_log_model(\"GRU\", gru_model, X_train, y_train, X_test, y_test)\n\n# ARIMA\narima_model = ARIMA(df[\"Value\"], order=(5, 1, 0))\ntrain_and_log_model(\"ARIMA\", arima_model, None, None, None, None)\n\n# XGBoost\nxgb_model = xgb.XGBRegressor(n_estimators=100, learning_rate=0.1, max_depth=6)\ntrain_and_log_model(\"XGBoost\", xgb_model, X_train, y_train, X_test, y_test)\n\n# RandomForest\nrf_model = RandomForestRegressor(n_estimators=100, max_depth=10)\ntrain_and_log_model(\"RandomForest\", rf_model, X_train, y_train, X_test, y_test)\n\n{% endif %}"
+  },
+  "data_repository": {
+    "pipeline_init": "\nkubectl exec {{ml_serving_pod_2}} -- mkdir /home/data_repository/data \nkubectl cp python/data_repository/. {{ml_serving_pod_2}}:/home/data_repository\n{% if DATA_TYPE==\"Image\" %}kubectl exec {{ml_serving_pod_2}} -- mkdir -p /home/data_repository/images\nkubectl cp data/images/. {{ml_serving_pod_2}}:/home/data_repository/data{% endif %}\nkubectl cp tools/minio_config/. {{ml_serving_pod_2}}:/home/data_repository\nkubectl exec {{ml_serving_pod_2}} -- pip install -r /home/data_repository/requirements.txt\nkubectl exec {{ml_serving_pod_2}} -- python3 /home/data_repository/main.py",
+    "python_init": "\n{% if DATA_TYPE==\"Time-Series\" %}\nfrom minio import Minio\nfrom minio.error import S3Error\nimport pandas as pd\nimport os\nimport urllib3\n\nurllib3.disable_warnings()\n\n# MinIO Server-Konfiguration\nMINIO_ENDPOINT = minio_service_1_ip  # MinIO API-Endpunkt innerhalb des Clusters\nACCESS_KEY = \"rootuser\"  # Ersetze mit deinem Access Key\nSECRET_KEY = \"rootpass123\"  # Ersetze mit deinem Secret Key\nBUCKET_NAME = \"energiedaten\"\nFILENAME = \"/home/data_repository/monthly_hourly_load_values_2022_DE.csv\"  # Beispieldatei\n\n# Verbindung zum MinIO-Server herstellen\nclient = Minio(\n    MINIO_ENDPOINT,\n    access_key=ACCESS_KEY,\n    secret_key=SECRET_KEY,\n    secure=False  # MinIO läuft ohne HTTPS\n)\n\ntry:\n    # Prüfen, ob der Bucket existiert, sonst erstellen\n    if not client.bucket_exists(BUCKET_NAME):\n        client.make_bucket(BUCKET_NAME)\n        print(f\"Bucket '{BUCKET_NAME}' wurde erstellt.\")\n    else:\n        print(f\"Bucket '{BUCKET_NAME}' existiert bereits.\")\n    \n    # CSV-Datei laden\n    if os.path.exists(FILENAME):\n        print(f\"Lade Datei '{FILENAME}'...\")\n        df = pd.read_csv(FILENAME)\n        print(\"Datei erfolgreich geladen:\")\n        print(df.head())\n    else:\n        print(f\"Fehler: Datei '{FILENAME}' nicht gefunden.\")\n        exit(1)\n    \n    # Datei in MinIO hochladen\n    client.fput_object(BUCKET_NAME, FILENAME, FILENAME)\n    print(f\"Datei '{FILENAME}' wurde in den Bucket '{BUCKET_NAME}' hochgeladen.\")\n\nexcept S3Error as e:\n    print(f\"Fehler: {e}\"){% endif %}{% if DATA_TYPE==\"Image\" %}\nfrom minio import Minio\nfrom minio.error import S3Error\nimport os\nimport urllib3\n\nurllib3.disable_warnings()\n\n# MinIO Server-Konfiguration\nMINIO_ENDPOINT = minio_service_1_ip  # MinIO API-Endpunkt innerhalb des Clusters\nACCESS_KEY = \"rootuser\"  # Ersetze mit deinem Access Key\nSECRET_KEY = \"rootpass123\"  # Ersetze mit deinem Secret Key\nBUCKET_NAME = \"image-data\"  # Bucket für Bilder\nIMAGE_DIR = \"/home/data_repository/data\"  # Ordner mit Bildern\n\n# Verbindung zum MinIO-Server herstellen\nclient = Minio(\n    MINIO_ENDPOINT,\n    access_key=ACCESS_KEY,\n    secret_key=SECRET_KEY,\n    secure=False  # MinIO läuft ohne HTTPS\n)\n\ntry:\n    # Prüfen, ob der Bucket existiert, sonst erstellen\n    if not client.bucket_exists(BUCKET_NAME):\n        client.make_bucket(BUCKET_NAME)\n        print(f\"Bucket '{BUCKET_NAME}' wurde erstellt.\")\n    else:\n        print(f\"Bucket '{BUCKET_NAME}' existiert bereits.\")\n    \n    # Alle Bilddateien hochladen\n    if os.path.exists(IMAGE_DIR):\n        for filename in os.listdir(IMAGE_DIR):\n            file_path = os.path.join(IMAGE_DIR, filename)\n            if os.path.isfile(file_path) and filename.lower().endswith(('.png', 'jpg', 'jpeg', 'tiff', 'bmp', 'gif')):\n                client.fput_object(BUCKET_NAME, filename, file_path)\n                print(f\"Bild '{filename}' wurde in den Bucket '{BUCKET_NAME}' hochgeladen.\")\n    else:\n        print(f\"Fehler: Ordner '{IMAGE_DIR}' nicht gefunden.\")\n        exit(1)\n\nexcept S3Error as e:\n    print(f\"Fehler: {e}\"){% endif %}"
+  },
+  "data_streaming": {
+    "pipeline_init": "{% if DATA_TYPE==\"Time-Series\" %}\nkubectl cp python/data_streaming/. {{ml_serving_pod_2}}:/home\nkubectl cp tools/data_streaming_config/. {{ml_serving_pod_2}}:/home\nkubectl exec {{ml_serving_pod_2}} -- pip install -r /home/requirements.txt\nkubectl exec {{ml_serving_pod_2}} -- python3 /home/main.py{% endif %}",
+    "python_init": "{% if DATA_TYPE==\"Time-Series\" %}\nimport mlflow\nimport numpy as np\nimport re\nfrom mlflow.tracking import MlflowClient\nimport requests\nimport json\nimport time\nimport pandas as pd\nfrom rich.console import Console\nfrom rich.live import Live\nfrom rich.table import Table\n\n# Setze die Verbindung zu MLflow\nmlflow.set_tracking_uri(\"http://{{ml_flow_service_service_1_ip}}\")\n\n# MLflow Client erstellen\nclient = MlflowClient()\n\n# Hole die Experiment-ID anhand des Namens\nexperiment_name = \"ENTSOE_TimeSeries\"\nexperiment = client.get_experiment_by_name(experiment_name)\nif experiment is None:\n    print(f\"Experiment '{experiment_name}' not found.\")\n    exit(1)\nelse:\n    print(\"[INFO] Experiment found\")\nexperiment_id = experiment.experiment_id\n\n# Suchen nach dem letzten Run im Experiment\nruns = mlflow.search_runs(experiment_ids=[experiment_id], order_by=[\"start_time DESC\"])\nif runs.empty:\n    print(\"No runs found.\")\n    exit(1)\nelse:\n    print(runs)\n    \n# Neuesten Run auswählen\nlatest_run = runs.iloc[0]\nrun_id = latest_run.run_id\nprint(f\"Newest Run: {run_id}\")\n\n# Überprüfen, ob das Modell existiert\nartifacts = client.list_artifacts(run_id)\nartifact_paths = [artifact.path for artifact in artifacts]\nif \"time_series_model\" not in artifact_paths:\n    print(\"Modell 'time_series_model' nicht gefunden.\")\n    exit(1)\nelse:\n    print(\"Model time_series_model found\")\n\n# Baue die Modell-URI\nmodel_uri = f\"runs:/{run_id}/time_series_model\"\nprint(f\"Load model from {model_uri}\")\n\n# Lade das Modell als PyFuncModel\ntry:\n    loaded_model = mlflow.pyfunc.load_model(model_uri)\n    print(\"Success.\")\nexcept Exception as e:\n    print(f\"Error loading model: {e}\")\n    exit(1)\n\n# Konfiguration\nDATA_STREAM_URL = \"http://{{data_streaming_service_service_1_ip}}/stream-data/modified?time_interval=0.001\"\nSESSION_COOKIE = \".eJyNkMtugzAQRX8lmnUgw8MkpqtK7bLbbkplGXsQTgFHtkkbofx7SUObLrMazdU9dx4TKO8aEewHDVACY5oxvk3qDDkmeVpTQbrQknOFTZZjhsmO8TqBNajRORqC0DJIT2GGx0Nnpfab3g6h7U6itaOby0UUR9mN5EWKaSqenmPlj3NEb7VpDDlhnSYH5RukHJElWx6pJi-iPMddJBumIqS0qHGbZ9QU8H4jPZTTfVAJUwWH08bWe1KhgnJVwbK6-E2LpdYmGDvclMdFeVmECtYz2AszaPq6pOC1_zQ6tP96ZbuxH65jXi-3L-BfTLnKEDH-sRt9Nd5zSAVnOK_B04GcDHb-GjzA-RsieIw9.Z90OLA.g5k3b1rP6uKvW_d3Ft9VbzaiJyg\"\nconsole = Console()\n\n# HTTP-Header setzen (Firefox-User-Agent nachahmen)\nHEADERS = {\"User-Agent\": \"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0\",\n\"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\",\n\"Accept-Language\": \"en-US,en;q=0.5\",\n\"Upgrade-Insecure-Requests\": \"1\",\n\"Priority\": \"u=0, i\"\n}\n\n# Session erstellen und Cookie setzen\nsession = requests.Session()\ndomain = re.sub(r':5020', '', \"{{data_streaming_service_service_1_ip}}\")\nsession.cookies.set(\"session\", SESSION_COOKIE, domain=domain, path=\"/\")\n\ndef fetch_data():\n    try:\n        response = session.get(DATA_STREAM_URL, headers=HEADERS, stream=True, timeout=10)\n        if response.status_code == 200:\n            console.print(\"[bold green][INFO][/bold green] Erfolgreiche Verbindung zum Datenstream!\")\n        else:\n            console.print(f\"[bold red][ERROR][/bold red] Verbindung fehlgeschlagen mit Statuscode {response.status_code}\")\n            return\n    except requests.exceptions.RequestException as e:\n        console.print(f\"[bold red][ERROR][/bold red] Konnte Datenstream nicht erreichen: {e}\")\n        return\n    \n    for line in response.iter_lines():\n        if line:\n            yield line.decode(\"utf-8\")\n\ndef parse_json(raw_data):\n    try:\n        if raw_data.startswith(\"data:\"):\n            raw_data = raw_data[len(\"data:\"):].strip()\n        return json.loads(raw_data)\n    except json.JSONDecodeError as e:\n        print(f\"[ERROR] Fehler beim Parsen von JSON: {e}\")\n        print(f\"[DEBUG] Empfangene Daten: {raw_data}\")  # Debugging-Ausgabe\n        return None\n\ndef display_stream():\n    for raw_data in fetch_data():\n        parsed_data = parse_json(raw_data)\n        if parsed_data:\n            time_to = parsed_data.get(\"TimeTo\", \"00:00\")\n            value = parsed_data.get(\"Value\", 0)\n            print(f\"TimeTo: {time_to}, Value: {value}\")\n\n            try:\n                input_data = np.array([[value]]) \n                predictions = loaded_model.predict(input_data)\n                print(\"Predictions:\")\n                print(predictions)\n            except Exception as e:\n                print(f\"Fehler bei der Vorhersage: {e}\")\n\nif __name__ == \"__main__\":\n    display_stream(){% endif %}"
+  },
+  "model_selection": {
+    "pipeline_init": "{% if DATA_TYPE==\"Time-Series\" %}{% if config.user_guided_model_selection_activation %}\necho Time-Series\necho Copying python files\nkubectl cp python/model_selection/. {{ml_serving_pod_2}}:/home\necho Copying config files\nkubectl cp tools/model_selection_config/. {{ml_serving_pod_2}}:/home\n echo Create directory on node\nkubectl exec {{ml_serving_pod_2}} --  mkdir /home/timeshap\nkubectl cp tools/timeshap/src/timeshap/. {{ml_serving_pod_2}}:/home/timeshap\nkubectl exec {{ml_serving_pod_2}} -- pip install -r /home/requirements.txt\nkubectl exec {{ml_serving_pod_2}} -- streamlit run /home/main.py{% endif %}{% endif %}",
+    "python_init": "{% if DATA_TYPE==\"Time-Series\" %}{% if config.user_guided_model_selection_activation %}\nimport streamlit as st\nimport mlflow\nfrom mlflow.tracking import MlflowClient\nimport pandas as pd\nimport numpy as np\nimport requests\nimport re\nimport json\nimport time\nfrom rich.console import Console\nimport matplotlib.pyplot as plt\nfrom evidently.report import Report\nfrom evidently.metrics import RegressionQualityMetric\n\nmlflow.set_tracking_uri(\"http://{{ml_flow_service_service_1_ip}}\")\nclient = MlflowClient()\n\nDATA_STREAM_URL = \"http://{{data_streaming_service_service_1_ip}}/stream-data/modified?time_interval=0.001\"\nSESSION_COOKIE = \".eJyNkMtugzAQRX8lmnUgw8MkpqtK7bLbbkplGXsQTgFHtkkbofx7SUObLrMazdU9dx4TKO8aEewHDVACY5oxvk3qDDkmeVpTQbrQknOFTZZjhsmO8TqBNajRORqC0DJIT2GGx0Nnpfab3g6h7U6itaOby0UUR9mN5EWKaSqenmPlj3NEb7VpDDlhnSYH5RukHJElWx6pJi-iPMddJBumIqS0qHGbZ9QU8H4jPZTTfVAJUwWH08bWe1KhgnJVwbK6-E2LpdYmGDvclMdFeVmECtYz2AszaPq6pOC1_zQ6tP96ZbuxH65jXi-3L-BfTLnKEDH-sRt9Nd5zSAVnOK_B04GcDHb-GjzA-RsieIw9.Z90OLA.g5k3b1rP6uKvW_d3Ft9VbzaiJyg\"\nconsole = Console()\n\nHEADERS = {\n    \"User-Agent\": \"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0\",\n    \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\",\n    \"Accept-Language\": \"en-US,en;q=0.5\",\n    \"Upgrade-Insecure-Requests\": \"1\",\n    \"Priority\": \"u=0, i\"\n}\n\nsession = requests.Session()\ndomain = re.sub(r':5020', '', \"{{data_streaming_service_service_1_ip}}\")\nsession.cookies.set(\"session\", SESSION_COOKIE, domain=domain, path=\"/\")\n\ndef fetch_data():\n    try:\n        response = session.get(DATA_STREAM_URL, headers=HEADERS, stream=True, timeout=10)\n        if response.status_code == 200:\n            console.print(\"[bold green][INFO][/bold green] Erfolgreiche Verbindung zum Datenstream!\")\n        else:\n            console.print(f\"[bold red][ERROR][/bold red] Verbindung fehlgeschlagen mit Statuscode {response.status_code}\")\n            return\n    except requests.exceptions.RequestException as e:\n        console.print(f\"[bold red][ERROR][/bold red] Konnte Datenstream nicht erreichen: {e}\")\n        return\n    \n    for line in response.iter_lines():\n        if line:\n            yield line.decode(\"utf-8\")\n\ndef parse_json(raw_data):\n    try:\n        if raw_data.startswith(\"data:\"):\n            raw_data = raw_data[len(\"data:\"):].strip()\n        return json.loads(raw_data)\n    except json.JSONDecodeError as e:\n        print(f\"[ERROR] Fehler beim Parsen von JSON: {e}\")\n        print(f\"[DEBUG] Empfangene Daten: {raw_data}\")\n        return None\n\nst.title(\"MLflow Model Selector\")\n\nst.subheader(\"Wähle ein Experiment aus:\")\nexperiments = mlflow.search_experiments()\nexperiment_names = [exp.name for exp in experiments]\nif not experiment_names:\n    st.error(\"Keine Experimente gefunden.\")\n    st.stop()\nselected_experiment_name = st.selectbox(\"Wähle ein Experiment:\", experiment_names)\nselected_experiment = next(exp for exp in experiments if exp.name == selected_experiment_name)\nexperiment_id = selected_experiment.experiment_id\n\nst.subheader(\"Wähle einen Modell-Run aus:\")\nruns = mlflow.search_runs(experiment_ids=[experiment_id], order_by=[\"start_time DESC\"])\nif runs.empty:\n    st.error(\"Keine Runs gefunden.\")\n    st.stop()\n\nst.dataframe(runs[['run_id', 'start_time', 'status', 'tags.mlflow.runName']])\nrun_id = st.selectbox(\"Wähle einen Run:\", runs['run_id'].tolist())\n\nif run_id:\n    artifacts = client.list_artifacts(run_id)\n    artifact_paths = [artifact.path for artifact in artifacts]\n    if not artifact_paths:\n        st.error(\"Keine Artefakte gefunden.\")\n    else:\n        selected_artifact = st.selectbox(\"Wähle ein Artefakt:\", artifact_paths)\n        model_uri = f\"runs:/{run_id}/{selected_artifact}\"\n        st.write(f\"Lade Modell von: {model_uri}\")\n        try:\n            model = mlflow.pyfunc.load_model(model_uri)\n            st.success(\"Modell erfolgreich geladen!\")\n            df = pd.DataFrame(columns=[\"Timestamp\", \"target\", \"prediction\"])\n            act_values = st.empty()\n            pred_values = st.empty()\n            plot_placeholder = st.empty()\n            report_placeholder = st.empty()\n            report = Report(metrics=[RegressionQualityMetric()])\n            \n            for raw_data in fetch_data():\n                parsed_data = parse_json(raw_data)\n                if parsed_data:\n                    timestamp = time.time()\n                    value = parsed_data.get(\"Value\", 0)\n                    prediction = model.predict(np.array([[value]])).item()\n                    df.loc[len(df)] = [timestamp, value, prediction]\n                    act_values.write(f\"Input: {value}\")\n                    pred_values.write(f\"Prediction: {prediction}\")\n                    {% if config.monitoring_activation %}\n                    fig, ax = plt.subplots(figsize=(10, 5))\n                    ax.plot(df[\"Timestamp\"], df[\"target\"], label=\"Actual Values\", marker='o')\n                    ax.plot(df[\"Timestamp\"], df[\"prediction\"], label=\"Predictions\", linestyle='--', marker='x')\n                    ax.set_xlabel(\"Timestamp\")\n                    ax.set_ylabel(\"Values\")\n                    ax.set_title(\"Echtzeit-Vorhersagen\")\n                    ax.legend()\n                    plot_placeholder.pyplot(fig){% endif %}\n        except Exception as e:\n            st.error(f\"Failure loading model: {e}\")\n{% endif %}{% endif %}"
+  },
+  "xai_serving": {
+    "python_init": "\nimport streamlit as st\nimport mlflow\nfrom mlflow.tracking import MlflowClient\nimport pandas as pd\nimport numpy as np\nimport requests\nimport re\nimport json\nimport time\nfrom rich.console import Console\nimport shap\nimport lime\nimport lime.lime_tabular\nfrom sklearn.preprocessing import MinMaxScaler\n\nmlflow.set_tracking_uri(\"http://{{ml_flow_service_service_1_ip}}\")\nclient = MlflowClient()\n\nDATA_STREAM_URL = \"http://{{data_streaming_service_service_1_ip}}/stream-data/modified?time_interval=0.001\"\nSESSION_COOKIE = \".eJyNkMtugzAQRX8lmnUgw8MkpqtK7bLbbkplGXsQTgFHtkkbofx7SUObLrMazdU9dx4TKO8aEewHDVACY5oxvk3qDDkmeVpTQbrQknOFTZZjhsmO8TqBNajRORqC0DJIT2GGx0Nnpfab3g6h7U6itaOby0UUR9mN5EWKaSqenmPlj3NEb7VpDDlhnSYH5RukHJElWx6pJi-iPMddJBumIqS0qHGbZ9QU8H4jPZTTfVAJUwWH08bWe1KhgnJVwbK6-E2LpdYmGDvclMdFeVmECtYz2AszaPq6pOC1_zQ6tP96ZbuxH65jXi-3L-BfTLnKEDH-sRt9Nd5zSAVnOK_B04GcDHb-GjzA-RsieIw9.Z90OLA.g5k3b1rP6uKvW_d3Ft9VbzaiJyg\"\nconsole = Console()\n\nHEADERS = {\"User-Agent\": \"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0\",\n    \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\",\n    \"Accept-Language\": \"en-US,en;q=0.5\",\n    \"Upgrade-Insecure-Requests\": \"1\",\n    \"Priority\": \"u=0, i\"}\n\nsession = requests.Session()\ndomain = re.sub(r':5020', '', \"{{data_streaming_service_service_1_ip}}\")\nsession.cookies.set(\"session\", SESSION_COOKIE, domain=domain, path=\"/\")\n\n# Lade historische Min/Max-Werte aus dem Trainingsdatensatz\nhistorical_data_path = \"/home/monthly_hourly_load_values_2022_DE.csv\"\nconsole.print(f\"[INFO] Loading historical data from {historical_data_path}\")\ndf = pd.read_csv(historical_data_path, delimiter=\";\", parse_dates=[\"TimeTo\"], index_col=\"TimeTo\")\n\n# Initialisiere den Scaler\nscaler = MinMaxScaler()\nscaler.fit(df[[\"Value\"]].values)\nconsole.print(\"[INFO] Scaler initialized with historical data.\")\n\nSEQ_LEN = 24\n\nst.subheader(\"Modell laden\")\nexperiment_name = \"ENTSOE_TimeSeries\"\nexperiment = client.get_experiment_by_name(experiment_name)\nif experiment is None:\n    st.error(f\"Experiment '{experiment_name}' nicht gefunden.\")\n    exit(1)\nexperiment_id = experiment.experiment_id\nruns = mlflow.search_runs(experiment_ids=[experiment_id], order_by=[\"start_time DESC\"])\nif runs.empty:\n    st.error(\"Keine Runs gefunden.\")\n    exit(1)\nlatest_run = runs.iloc[0]\nrun_id = latest_run.run_id\n\nartifacts = client.list_artifacts(run_id)\nartifact_paths = [artifact.path for artifact in artifacts]\nif \"time_series_model\" not in artifact_paths:\n    st.error(\"Modell 'time_series_model' nicht gefunden.\")\n    exit(1)\n\nmodel_uri = f\"runs:/{run_id}/time_series_model\"\nmodel = mlflow.pyfunc.load_model(model_uri)\nst.success(\"Modell erfolgreich geladen!\")\n\ndef fetch_data():\n    try:\n        response = session.get(DATA_STREAM_URL, headers=HEADERS, stream=True, timeout=10)\n        if response.status_code == 200:\n            console.print(\"[INFO] Erfolgreiche Verbindung zum Datenstream!\")\n        else:\n            console.print(f\"[ERROR] Verbindung fehlgeschlagen mit Statuscode {response.status_code}\")\n            return\n    except requests.exceptions.RequestException as e:\n        console.print(f\"[ERROR] Konnte Datenstream nicht erreichen: {e}\")\n        return\n    for line in response.iter_lines():\n        if line:\n            decoded_line = line.decode(\"utf-8\").strip()\n            if decoded_line.startswith(\"data:\"):\n                decoded_line = decoded_line[len(\"data:\"):].strip()\n            if decoded_line:\n                try:\n                    yield json.loads(decoded_line)\n                except json.JSONDecodeError as e:\n                    console.print(f\"[ERROR] Fehler beim Parsen von JSON: {e}\")\n                    console.print(f\"[DEBUG] Empfangene Daten: {decoded_line}\")\n\ndef process_stream():\n    sequence_buffer = []\n    pred_values = st.empty()\n    for parsed_data in fetch_data():\n        time_to = parsed_data.get(\"TimeTo\", \"00:00\")\n        value = parsed_data.get(\"Value\", 0)\n        scaled_value = scaler.transform(np.array([[value]]))[0][0]\n        sequence_buffer.append(scaled_value)\n        \n        if len(sequence_buffer) < SEQ_LEN:\n            continue\n\n        input_data = np.array(sequence_buffer[-SEQ_LEN:]).reshape(1, SEQ_LEN, 1).astype(np.float32)\n        prediction = model.predict(input_data)\n\n        # SHAP Erklärung\n        background_data = np.zeros((10, SEQ_LEN)).astype(np.float32)\n        masker = shap.maskers.Independent(background_data)\n        explainer = shap.Explainer(lambda x: model.predict(x.reshape(-1, SEQ_LEN, 1)), masker)\n        shap_values = explainer(input_data.reshape(1, SEQ_LEN))\n\n        # LIME Erklärung\n        lime_explainer = lime.lime_tabular.LimeTabularExplainer(training_data=np.zeros((10, SEQ_LEN)), mode=\"regression\")\n        lime_exp = lime_explainer.explain_instance(input_data.flatten(), lambda x: model.predict(x.reshape(-1, SEQ_LEN, 1)))\n\n        pred_values.write(f\"Eingangsdaten: {input_data}\")\n        pred_values.write(f\"Vorhersage: {prediction}\")\n        pred_values.write(f\"SHAP Werte: {shap_values.values.tolist()}\")\n        pred_values.write(f\"LIME Erklärung: {lime_exp.as_list()}\")\n\nif __name__ == \"__main__\":\n    process_stream()\n",
+    "pipeline_init": "{% if DATA_TYPE==\"Time-Series\" %}\nkubectl cp python/xai_serving/. {{xai_serving_pod_1}}:/home\nkubectl cp tools/xai_serving_config/. {{xai_serving_pod_1}}:/home\nkubectl exec {{xai_serving_pod_1}} -- pip install -r /home/requirements.txt\nkubectl exec {{xai_serving_pod_1}} -- streamlit run /home/main.py{% endif %}"
+  }
+}

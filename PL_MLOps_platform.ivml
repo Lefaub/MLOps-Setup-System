@@ -1,0 +1,172 @@
+project PL_MLOps_platform {
+    version v0;
+
+    enum Data_type{ Time_Series, Image, Other };
+    Data_type data_type;
+    enum Xai_algorithm{ DIP_VAE, ProtoDash, LIME, SHAP, XRAI, ProfWeight, CEM, CEM_MAF, TED };
+    Xai_algorithm xai_algorithm;
+    enum User_guided_model_selection{ Conventional, NN };
+    User_guided_model_selection user_guided_model_selection;
+    String evidently_service_service_1_ip = "10.99.44.67:8000";
+    String evidently_service_pod_1 = "evidently-deployment-77db5fc9df-whfrp";
+    String jupyter_service_service_1_ip = "10.109.210.84:80";
+    String jupyter_service_pod_1 = "jupyter-deployment-77f88445f9-vkbhk";
+    String kubernetes_service_1_ip = "10.96.0.1:443";
+    String minio_1741621915_service_1_ip = "10.103.107.71:9000";
+    String minio_1741621915_pod_1 = "minio-1741621915-8688f7889c-7vjww";
+    String minio_1741621915_console_service_1_ip = "10.97.63.197:9001";
+    String minio_1741621915_console_pod_1 = "minio-1741621915-8688f7889c-7vjww";
+    String ml_flow_service_service_1_ip = "10.96.72.66:5000";
+    String ml_flow_service_pod_1 = "ml-flow-deployment-84f7b9d778-xtkfg";
+    String kube_dns_service_1_ip = "10.96.0.10:53";
+    String kube_dns_service_2_ip = "10.96.0.10:53";
+    String kube_dns_service_3_ip = "10.96.0.10:9153";
+    String kube_dns_pod_1 = "kube-apiserver-leonhard-omen-by-hp-laptop-15-dh0xxx";
+    String kube_dns_pod_2 = "kube-controller-manager-leonhard-omen-by-hp-laptop-15-dh0xxx";
+    String kube_dns_pod_3 = "kube-proxy-6sl56";
+    String kube_dns_pod_4 = "kube-proxy-jhtnb";
+    String kube_dns_pod_5 = "kube-proxy-ns2tw";
+    String kube_dns_pod_6 = "kube-scheduler-leonhard-omen-by-hp-laptop-15-dh0xxx";
+    compound General_settings {
+        String tag = "v1.11111";
+    }
+    compound Model_serialization {
+        Boolean model_serialization_activation = false;
+        Boolean packaging_and_containerization_activation = false;
+        Boolean workflow_orchestration_activation = false;
+        Boolean container_orchestration_activation = false;
+    }
+    compound Serve_model_pipelines {
+        Boolean serve_model_pipelines_activation = false;
+        Boolean ml_model_serving_activation = false;
+        Boolean xai_serving_activation = false;
+    }
+    compound Development_IDE {
+        Boolean development_ide_activation = true;
+    }
+    compound Model_selection {
+        Boolean model_selection_activation = false;
+        Boolean user_guided_model_selection_activation = false;
+        Boolean model_training_and_update_activation = false;
+        Boolean model_visualization_for_evaluation_activation = false;
+        Boolean xai_selection_activation = false;
+        Boolean xai_algorithm_activation = false;
+        Boolean XAI_data_conversion_activation = false;
+        Boolean xai_training_activation = false;
+        Boolean visualize_explanations_activation = false;
+        Boolean automl_activation = false;
+        Boolean hyperparameter_tuning_activation = false;
+    }
+    compound Data_collection {
+        Boolean data_collection_activation = true;
+    }
+    compound ML_feature_extraction {
+        Boolean ml_feature_extraction_activation = false;
+    }
+    compound Data_preparation {
+        Boolean data_preparation_activation = false;
+    }
+    compound Data_visualization {
+        Boolean data_visualization_activation = false;
+    }
+    compound Data_streaming {
+        Boolean data_streaming_activation = false;
+        Boolean live_data_and_drift_simulation_activation = false;
+        Boolean time_series_live_data_ui_activation = false;
+        Boolean image_live_data_ui_activation = false;
+        Boolean data_cleaning_activation = false;
+        Boolean dimensionality_modification_activation = false;
+        Boolean sampling_activation = false;
+        Boolean feature_selection_activation = false;
+        Boolean axis_rotation_activation = false;
+        Boolean type_transformation_activation = false;
+        Boolean one_hot_coding_activation = false;
+        Boolean drop_duplicates_activation = false;
+        Boolean remove_empty_values_activation = false;
+        Boolean viterbi_algorithm_activation = false;
+        Boolean meanshift_activation = false;
+        Boolean camshift_activation = false;
+        Boolean optical_flow_activation = false;
+        Boolean background_substraction_activation = false;
+        Boolean data_labeling_activation = false;
+    }
+    compound Data_repository {
+        Boolean data_repository_activation = true;
+        Boolean s3_type_database_activation = true;
+        String memory_size = "512";
+    }
+    compound Model_registry {
+    }
+    compound Code_repository {
+        Boolean code_repository_activation = false;
+    }
+    compound Feature_Store {
+        Boolean feature_store_activation = false;
+    }
+    compound Container_registry {
+        Boolean container_registry_activation = false;
+    }
+    compound Monitoring {
+        Boolean monitoring_activation = true;
+        Boolean drift_detection_activation = false;
+        Boolean explanatory_monitoring_activation = false;
+    }
+    compound Testing {
+        Boolean testing_activation = false;
+        Boolean ml_performance_gui_activation = false;
+        Boolean live_testing_activation = false;
+    }
+    compound Incremental_Explanatory_Training {
+        Boolean incremental_explanatory_training_activation = false;
+        Boolean inference_feedback_gui_for_image_activation = false;
+        Boolean xai_feedback_gui_for_image_activation = false;
+        Boolean inference_feedback_gui_for_time_series_activation = false;
+        Boolean xai_feedback_gui_for_time_series_activation = false;
+    }
+    compound Training_cluster {
+        Boolean cpu_cluster_activation = false;
+        Boolean gpu_cluster_activation = false;
+        Boolean tpu_cluster_activation = false;
+        Boolean fpga_cluster_activation = false;
+    }
+
+    General_settings general_settings;
+    general_settings = { };
+    Model_serialization model_serialization;
+    model_serialization = { };
+    Serve_model_pipelines serve_model_pipelines;
+    serve_model_pipelines = { };
+    Development_IDE development_ide;
+    development_ide = { };
+    Model_selection model_selection;
+    model_selection = { };
+    Data_collection data_collection;
+    data_collection = { };
+    ML_feature_extraction ml_feature_extraction;
+    ml_feature_extraction = { };
+    Data_preparation data_preparation;
+    data_preparation = { };
+    Data_visualization data_visualization;
+    data_visualization = { };
+    Data_streaming data_streaming;
+    data_streaming = { };
+    Data_repository data_repository;
+    data_repository = { };
+    Model_registry model_registry;
+    model_registry = { };
+    Code_repository code_repository;
+    code_repository = { };
+    Feature_Store feature_store;
+    feature_store = { };
+    Container_registry container_registry;
+    container_registry = { };
+    Monitoring monitoring;
+    monitoring = { };
+    Testing testing;
+    testing = { };
+    Incremental_Explanatory_Training incremental_explanatory_training;
+    incremental_explanatory_training = { };
+    Training_cluster training_cluster;
+    training_cluster = { };
+
+}

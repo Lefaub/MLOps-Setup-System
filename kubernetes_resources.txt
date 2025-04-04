@@ -1,0 +1,187 @@
+=== Services ===
+Service Name: airflow-service
+Namespace: default
+Cluster IP: 10.103.53.196
+Ports: 8080/TCP
+
+Service Name: data-streaming-service
+Namespace: default
+Cluster IP: 10.103.196.92
+Ports: 5020/TCP
+
+Service Name: evidently-service
+Namespace: default
+Cluster IP: 10.99.11.196
+Ports: 8000/TCP
+
+Service Name: git-server-service
+Namespace: default
+Cluster IP: 10.104.60.12
+Ports: 3000/TCP, 22/TCP
+
+Service Name: jupyter-service
+Namespace: default
+Cluster IP: 10.100.131.209
+Ports: 80/TCP
+
+Service Name: kubernetes
+Namespace: default
+Cluster IP: 10.96.0.1
+Ports: 443/TCP
+
+Service Name: label-studio-service
+Namespace: default
+Cluster IP: 10.103.79.44
+Ports: 8080/TCP
+
+Service Name: minio
+Namespace: default
+Cluster IP: 10.106.76.125
+Ports: 9000/TCP
+
+Service Name: minio-console
+Namespace: default
+Cluster IP: 10.103.226.32
+Ports: 9001/TCP
+
+Service Name: ml-flow-service
+Namespace: default
+Cluster IP: 10.101.132.32
+Ports: 5000/TCP
+
+Service Name: ml-serving
+Namespace: default
+Cluster IP: 10.107.192.214
+Ports: 8050/TCP
+
+Service Name: xai-serving
+Namespace: default
+Cluster IP: 10.105.86.213
+Ports: 8040/TCP
+
+Service Name: kube-dns
+Namespace: kube-system
+Cluster IP: 10.96.0.10
+Ports: 53/UDP, 53/TCP, 9153/TCP
+
+=== Pods ===
+Pod Name: airflow-deployment-5b58db478c-ns2ck
+Namespace: default
+Node: leonhard-optiplex-7010
+Status: Running
+
+Pod Name: data-streaming-deployment-7db4847bc8-s2sdk
+Namespace: default
+Node: leonhard-optiplex-7010
+Status: Running
+
+Pod Name: evidently-deployment-9776f7558-cbxhk
+Namespace: default
+Node: leonhard-optiplex-7010
+Status: Running
+
+Pod Name: git-server-deployment-5f4849d6cc-ck8ln
+Namespace: default
+Node: leonhard-optiplex-760
+Status: Running
+
+Pod Name: jupyter-deployment-5d467f85dd-pkw5z
+Namespace: default
+Node: leonhard-optiplex-7010
+Status: Running
+
+Pod Name: label-studio-deployment-786d475696-lkm92
+Namespace: default
+Node: leonhard-optiplex-7010
+Status: Running
+
+Pod Name: minio-7f859678fd-l5756
+Namespace: default
+Node: leonhard-optiplex-7010
+Status: Running
+
+Pod Name: ml-flow-deployment-85c7c7d8b9-sdkfl
+Namespace: default
+Node: leonhard-optiplex-7010
+Status: Running
+
+Pod Name: ml-serving-deployment-58b68f6c58-lhmvv
+Namespace: default
+Node: leonhard-optiplex-7010
+Status: Running
+
+Pod Name: xai-deployment-5d97649c99-jc4rf
+Namespace: default
+Node: leonhard-optiplex-7010
+Status: Running
+
+Pod Name: kube-flannel-ds-67848
+Namespace: kube-flannel
+Node: leonhard-optiplex-760
+Status: Running
+
+Pod Name: kube-flannel-ds-ljdcg
+Namespace: kube-flannel
+Node: node2
+Status: Running
+
+Pod Name: kube-flannel-ds-rgjxg
+Namespace: kube-flannel
+Node: leonhard-omen-by-hp-laptop-15-dh0xxx
+Status: Running
+
+Pod Name: kube-flannel-ds-wscnr
+Namespace: kube-flannel
+Node: leonhard-optiplex-7010
+Status: Running
+
+Pod Name: coredns-6d4b75cb6d-lvkw6
+Namespace: kube-system
+Node: leonhard-omen-by-hp-laptop-15-dh0xxx
+Status: Running
+
+Pod Name: coredns-6d4b75cb6d-qkbwn
+Namespace: kube-system
+Node: leonhard-omen-by-hp-laptop-15-dh0xxx
+Status: Running
+
+Pod Name: etcd-leonhard-omen-by-hp-laptop-15-dh0xxx
+Namespace: kube-system
+Node: leonhard-omen-by-hp-laptop-15-dh0xxx
+Status: Running
+
+Pod Name: kube-apiserver-leonhard-omen-by-hp-laptop-15-dh0xxx
+Namespace: kube-system
+Node: leonhard-omen-by-hp-laptop-15-dh0xxx
+Status: Running
+
+Pod Name: kube-controller-manager-leonhard-omen-by-hp-laptop-15-dh0xxx
+Namespace: kube-system
+Node: leonhard-omen-by-hp-laptop-15-dh0xxx
+Status: Running
+
+Pod Name: kube-proxy-6sl56
+Namespace: kube-system
+Node: leonhard-optiplex-760
+Status: Running
+
+Pod Name: kube-proxy-jhtnb
+Namespace: kube-system
+Node: leonhard-omen-by-hp-laptop-15-dh0xxx
+Status: Running
+
+Pod Name: kube-proxy-ns2tw
+Namespace: kube-system
+Node: node2
+Status: Running
+
+Pod Name: kube-proxy-qt656
+Namespace: kube-system
+Node: leonhard-optiplex-7010
+Status: Running
+
+Pod Name: kube-scheduler-leonhard-omen-by-hp-laptop-15-dh0xxx
+Namespace: kube-system
+Node: leonhard-omen-by-hp-laptop-15-dh0xxx
+Status: Running
+

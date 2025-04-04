@@ -1,0 +1,343 @@
+{
+  "script_types": [
+    {
+      "name": "bash",
+      "output_path": "build_scripts",
+      "extension": ".sh"
+    },
+    {
+      "name": "docker",
+      "output_path": "src/docker",
+      "extension": "/Dockerfile"
+    },
+    {
+      "name": "kubernetes",
+      "output_path": "src/kubernetes",
+      "extension": "/deployment.yml"
+    },
+    {
+      "name": "pipeline_init",
+      "output_path": "python/build/",
+      "extension": ".sh"
+    },
+    {
+      "name": "python",
+      "output_path": "src/docker",
+      "extension": "/webserver_config.py"
+    },
+    {
+      "name": "kubernetes_service",
+      "output_path": "src/kubernetes",
+      "extension": "/service.yml"
+    }
+  ],
+  "rules": [
+    {
+      "name": "Model_registry",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "bash"
+    },
+    {
+      "name": "Model_registry",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "docker"
+    },
+    {
+      "name": "Model_registry",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "kubernetes"
+    },
+    {
+      "name": "Monitoring",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "bash"
+    },
+    {
+      "name": "Monitoring",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "docker"
+    },
+    {
+      "name": "Monitoring",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "kubernetes"
+    },
+    {
+      "name": "Data_repository",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "bash"
+    },
+    {
+      "name": "Data_repository",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "docker"
+    },
+    {
+      "name": "Data_repository",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "kubernetes"
+    },
+    {
+      "name": "Data_streaming",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "bash"
+    },
+    {
+      "name": "Data_streaming",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "docker"
+    },
+    {
+      "name": "Data_streaming",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "kubernetes"
+    },
+    {
+      "name": "Development_ide",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "docker"
+    },
+    {
+      "name": "Development_ide",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "kubernetes"
+    },
+    {
+      "name": "Development_ide",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "bash"
+    },
+    {
+      "name": "Data_collection",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "docker"
+    },
+    {
+      "name": "Data_collection",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "kubernetes"
+    },
+    {
+      "name": "Data_collection",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "bash"
+    },
+    {
+      "name": "Incremental_explanatory_training",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "bash"
+    },
+    {
+      "name": "Incremental_explanatory_training",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "docker"
+    },
+    {
+      "name": "Incremental_explanatory_training",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "kubernetes"
+    },
+    {
+      "name": "Workflow_orchestration",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "bash"
+    },
+    {
+      "name": "Workflow_orchestration",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "docker"
+    },
+    {
+      "name": "Workflow_orchestration",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "kubernetes"
+    },
+    {
+      "name": "Workflow_orchestration",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "python"
+    },
+    {
+      "name": "Code_repository",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "bash"
+    },
+    {
+      "name": "Code_repository",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "docker"
+    },
+    {
+      "name": "Code_repository",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "kubernetes"
+    },
+    {
+      "name": "Code_repository",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "kubernetes_service"
+    },
+    {
+      "name": "Xai_serving",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "bash"
+    },
+    {
+      "name": "Xai_serving",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "docker"
+    },
+    {
+      "name": "Xai_serving",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "kubernetes"
+    },
+    {
+      "name": "Serve_model_pipelines",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "bash"
+    },
+    {
+      "name": "Serve_model_pipelines",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "docker"
+    },
+    {
+      "name": "Serve_model_pipelines",
+      "value": true,
+      "condition": "",
+      "condition_value": true,
+      "script_type": "kubernetes"
+    }
+  ],
+  "data_repository": {
+    "bash": "\nhelm repo add minio https://charts.min.io/\nhelm repo update\nhelm install minio minio/minio --set resources.requests.memory=${MEMORY_SIZE}Mi \\\n--set replicas=1 \\\n--set persistence.enabled=false \\\n--set mode=standalone \\\n--set rootUser=rootuser,rootPassword=rootpass123 \\\n--set service.type=LoadBalancer \\\n",
+    "docker": "FROM minio/minio\nCMD [\"server\", \"/data\"]",
+    "kubernetes": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: minio\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: minio\n  template:\n    metadata:\n      labels:\n        app: minio\n    spec:\n      containers:\n      - name: minio\n        image: minio/minio\n        args:\n        - server\n        - /data"
+  },
+  "data_collection": {
+    "bash": "{% if config.data_labeling_activation %}\nSERVICE_NAME=\"data_collection\"\nIMAGE_NAME=\"{{config.docker_hub_user}}/${SERVICE_NAME}\"\nDEPLOYMENT_FILE=\"deployment.yml\"\n\nBUILD_DIR=\"${SERVICE_NAME}_build\"\nrm -rf $BUILD_DIR\nmkdir -p $BUILD_DIR\n\ncp -r src/docker/$SERVICE_NAME/* $BUILD_DIR/\ncp -r src/kubernetes/$SERVICE_NAME/* $BUILD_DIR/\n\ncd $BUILD_DIR\ndocker build -t $IMAGE_NAME:$TAG .\ndocker login\ndocker push $IMAGE_NAME:$TAG\n\nsed -i \"s|<DOCKER-IMAGE>|${IMAGE_NAME}:${TAG}|g\" $DEPLOYMENT_FILE\nkubectl apply -f $DEPLOYMENT_FILE{% endif %}",
+    "docker": "{% if config.data_labeling_activation %}FROM heartexlabs/label-studio:latest\nWORKDIR /label-studio\nEXPOSE 8080\n# Erzwinge anonyme Anmeldung und setze Admin-User\nENV LABEL_STUDIO_ALLOW_ANONYMOUS_ACCESS=true\nENV LABEL_STUDIO_DISABLE_AUTH=true\nENV LABEL_STUDIO_USERNAME=\"admin\"\nENV LABEL_STUDIO_PASSWORD=\"admin\"\n# Lösche alte Datenbank, um alten Login zu entfernen\nRUN rm -f /label-studio/data/label_studio.sqlite3\nCMD [\"sh\", \"-c\", \"label-studio user create --username admin --password admin --email admin@example.com && label-studio start\"]{% endif %}",
+    "kubernetes": "{% if config.data_labeling_activation %}apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: label-studio-deployment\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: label-studio\n  template:\n    metadata:\n      labels:\n        app: label-studio\n    spec:\n      containers:\n      - name: label-studio\n        image: <DOCKER-IMAGE>\n        ports:\n        - containerPort: 8080\n        env:\n        - name: LABEL_STUDIO_ALLOW_ANONYMOUS_ACCESS\n          value: \"true\"\n        - name: LABEL_STUDIO_DISABLE_AUTH\n          value: \"true\"\n        - name: LABEL_STUDIO_USERNAME\n          value: \"admin\"\n        - name: LABEL_STUDIO_PASSWORD\n          value: \"admin\"\n        command: [\"sh\", \"-c\", \"rm -f /label-studio/data/label_studio.sqlite3 && label-studio user create --username admin --password admin --email admin@example.com && label-studio start\"]\n---\napiVersion: v1\nkind: Service\nmetadata:\n  name: label-studio-service\nspec:\n  type: LoadBalancer\n  ports:\n  - protocol: TCP\n    port: 8080\n    targetPort: 8080\n  selector:\n    app: label-studio{% endif %}"
+  },
+  "data_streaming": {
+    "bash": "\nSERVICE_NAME=\"data_streaming\"\n\nIMAGE_NAME=\"{{config.docker_hub_user}}/${SERVICE_NAME}\"\nDEPLOYMENT_FILE=\"deployment.yml\"\necho \"Building and deploying $SERVICE_NAME\"\n\nBUILD_DIR=\"${SERVICE_NAME}_build\"\nrm -rf $BUILD_DIR\nmkdir -p $BUILD_DIR\nmkdir -p $BUILD_DIR/data-drift-simulator/\ncp -r src/docker/$SERVICE_NAME/* $BUILD_DIR/\ncp -r tools/{% if DATA_TYPE==\"Time-Series\" %}data-drift-simulator_time_series{% endif %}{% if DATA_TYPE==\"Image\" %}data-drift-simulator{% endif %}/* $BUILD_DIR/data-drift-simulator/  # Flask-App wird kopiert\ncp -r src/kubernetes/$SERVICE_NAME/* $BUILD_DIR/\n\nif [ ! -f \"$BUILD_DIR/data-drift-simulator/flask_app.py\" ]; then\n    echo \"Error: flask_app.py nicht gefunden!\"\n    exit 1\nfi\n\ncd $BUILD_DIR\ndocker build -t $IMAGE_NAME:$TAG .\ndocker login\ndocker push $IMAGE_NAME:$TAG\n\nsed -i \"s|<DOCKER-IMAGE>|${IMAGE_NAME}:${TAG}|g\" $DEPLOYMENT_FILE\nkubectl apply -f $DEPLOYMENT_FILE",
+    "docker": "FROM python:3.10\nWORKDIR /app\nCOPY data-drift-simulator/ /app/\n\nRUN test -f /app/flask_app.py || (echo \"Error: flask_app.py fehlt!\" && exit 1)\nRUN pip install flask_wtf\nRUN pip install --upgrade pip\nRUN pip install -r requirements.txt\nEXPOSE 5020\nCMD [\"python\", \"/app/flask_app.py\"]",
+    "kubernetes": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: data-streaming-deployment\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: data-streaming\n  template:\n    metadata:\n      labels:\n        app: data-streaming\n    spec:\n      containers:\n      - name: data-streaming\n        image: <DOCKER-IMAGE>\n        ports:\n        - containerPort: 5020\n\n---\napiVersion: v1\nkind: Service\nmetadata:\n  name: data-streaming-service\nspec:\n  type: LoadBalancer\n  ports:\n  - protocol: TCP\n    port: 5020\n    targetPort: 5020\n    nodePort: 32044\n  selector:\n    app: data-streaming"
+  },
+  "model_training": {
+    "bash": "echo \"Starting model training...\"\npython train.py",
+    "docker": "FROM python:3.8\nCOPY train.py /app/train.py\nWORKDIR /app\nCMD [\"python\", \"train.py\"]",
+    "kubernetes": "apiVersion: batch/v1\nkind: Job\nmetadata:\n  name: model-training\nspec:\n  template:\n    spec:\n      containers:\n      - name: trainer\n        image: myregistry.com/model-training:latest\n        command: [\"python\", \"train.py\"]\n      restartPolicy: Never"
+  },
+  "development_ide": {
+    "bash": "\n\nSERVICE_NAME=\"development_ide\"\nIMAGE_NAME=\"{{config.docker_hub_user}}/${SERVICE_NAME}\"\nDEPLOYMENT_FILE=\"deployment.yml\"\necho $SERVICE_NAME\n\nBUILD_DIR=\"${SERVICE_NAME}_build\"\nrm -rf $BUILD_DIR\nmkdir -p $BUILD_DIR/home\ncp -r tools/jupyter/* $BUILD_DIR/home\n\n# Erstelle das Start-Skript im Build-Ordner\ncat <<EOF > $BUILD_DIR/start.sh\n#!/bin/bash\nexec jupyter lab \\\n    --port=80 \\\n    --ip=0.0.0.0 \\\n    --allow-root \\\n    --no-browser \\\n    --NotebookApp.token='' \\\n    --NotebookApp.password='' \\\n    --NotebookApp.allow_origin='*' \\\n    --NotebookApp.disable_check_xsrf=True \\\n    --NotebookApp.tornado_settings='{\"headers\": {\"X-Frame-Options\": \"ALLOWALL\", \"Content-Security-Policy\": \"frame-ancestors *\"}}'\nEOF\n\nchmod +x $BUILD_DIR/start.sh\n\ncp -r src/docker/$SERVICE_NAME/* $BUILD_DIR/\ncp -r src/kubernetes/$SERVICE_NAME/* $BUILD_DIR/\n\ncd $BUILD_DIR\ndocker build -t $IMAGE_NAME:$TAG .\ndocker login\ndocker push $IMAGE_NAME:$TAG\n\nsed -i \"s|<DOCKER-IMAGE>|${IMAGE_NAME}:${TAG}|g\" $DEPLOYMENT_FILE\nkubectl apply -f $DEPLOYMENT_FILE",
+    "docker": "FROM python:3.10\n\nWORKDIR /home\nCOPY home/ /home/\n# Upgrade pip und installiere JupyterLab\nRUN pip install --upgrade pip\nRUN pip install jupyterlab xgboost tensorflow mlflow opencv-python scikit-image\n\n# Kopiere das zuvor erstellte Start-Skript ins Image\nCOPY start.sh /usr/local/bin/generate_start.sh\n\n# Mache das Skript ausführbar\nRUN chmod +x /usr/local/bin/generate_start.sh\n\nEXPOSE 80\n\n# Setze das Start-Skript als CMD\nCMD [\"/usr/local/bin/generate_start.sh\"]",
+    "kubernetes": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: jupyter-deployment\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: jupyter\n  template:\n    metadata:\n      labels:\n        app: jupyter\n    spec:\n      containers:\n      - name: jupyter\n        image: <DOCKER-IMAGE>\n        ports:\n        - containerPort: 80\n\n---\napiVersion: v1\nkind: Service\nmetadata:\n  name: jupyter-service\nspec:\n  type: LoadBalancer\n  ports:\n  - protocol: TCP\n    port: 80\n    targetPort: 80\n    nodePort: 32041\n  selector:\n    app: jupyter"
+  },
+  "monitoring": {
+    "bash": "\nSERVICE_NAME=\"monitoring\"\nIMAGE_NAME=\"{{config.docker_hub_user}}/${SERVICE_NAME}\"\nDEPLOYMENT_FILE=\"deployment.yml\"\necho $SERVICE_NAME\n\nBUILD_DIR=\"${SERVICE_NAME}_build\"\nrm -rf $BUILD_DIR\nmkdir $BUILD_DIR\n\ncp -r src/docker/$SERVICE_NAME/* $BUILD_DIR/\ncp -r src/kubernetes/$SERVICE_NAME/* $BUILD_DIR/\n\ncd $BUILD_DIR\ndocker build -t $IMAGE_NAME:$TAG .\ndocker login\ndocker push $IMAGE_NAME:$TAG\n\nsed -i \"s|<DOCKER-IMAGE>|${IMAGE_NAME}:${TAG}|g\" $DEPLOYMENT_FILE\nkubectl apply -f $DEPLOYMENT_FILE",
+    "docker": "FROM python:3.10.0\nRUN pip install --upgrade pip\nRUN pip install evidently fastapi uvicorn pandas\n\nWORKDIR /app\n\nRUN echo \"from fastapi import FastAPI\" > /app/main.py \nRUN echo \"import pandas as pd\" >> /app/main.py \nRUN echo \"from fastapi.responses import HTMLResponse\" >> /app/main.py \nRUN echo \"from evidently.report import Report\" >> /app/main.py \nRUN echo \"from evidently.metric_preset import DataDriftPreset, RegressionPreset\" >> /app/main.py \nRUN echo \"app = FastAPI()\" >> /app/main.py \nRUN echo \"@app.get('/')\" >> /app/main.py \nRUN echo \"def home(): return {'message': 'Evidently API Server is running!'}\" >> /app/main.py \nRUN echo \"@app.get('/report/', response_class=HTMLResponse)\" >> /app/main.py \nRUN echo \"def show_report():\" >> /app/main.py \nRUN echo \"    with open('evidently_report.html', 'r') as f:\" >> /app/main.py \nRUN echo \"        return f.read()\" >> /app/main.py \nRUN echo \"@app.post('/upload/')\" >> /app/main.py \nRUN echo \"async def upload_data(data: list[dict]):\" >> /app/main.py \nRUN echo \"    df = pd.DataFrame(data)\" >> /app/main.py \nRUN echo \"    report = Report(metrics=[DataDriftPreset(), RegressionPreset()])\" >> /app/main.py \nRUN echo \"    report.run(reference_data=df[:50], current_data=df[50:])\" >> /app/main.py \nRUN echo \"    report.save_html('evidently_report.html')\" >> /app/main.py \nRUN echo \"    return {'message': 'Report generated!', 'file': '/report/'}\" >> /app/main.py \nRUN echo \"if __name__ == '__main__':\" >> /app/main.py \nRUN echo \"    import uvicorn\" >> /app/main.py \nRUN echo \"    uvicorn.run(app, host='0.0.0.0', port=8000)\" >> /app/main.py \n\nEXPOSE 8000\nCMD [\"python\", \"/app/main.py\"]",
+    "kubernetes": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: evidently-deployment\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: evidently\n  template:\n    metadata:\n      labels:\n        app: evidently\n    spec:\n      containers:\n      - name: evidently\n        image: <DOCKER-IMAGE>\n        ports:\n        - containerPort: 8000\n\n---\napiVersion: v1\nkind: Service\nmetadata:\n  name: evidently-service\nspec:\n  type: LoadBalancer\n  ports:\n  - protocol: TCP\n    port: 8000\n    targetPort: 8000\n    nodePort: 32039\n  selector:\n    app: evidently"
+  },
+  "model_registry": {
+    "bash": "\n\nSERVICE_NAME=\"model_registry\"\nIMAGE_NAME=\"{{config.docker_hub_user}}/${SERVICE_NAME}\"\nDEPLOYMENT_FILE=\"deployment.yml\"\n\nBUILD_DIR=\"${SERVICE_NAME}_build\"\nrm -rf $BUILD_DIR\nmkdir $BUILD_DIR\n\ncp -r src/docker/$SERVICE_NAME/* $BUILD_DIR/\ncp -r src/kubernetes/$SERVICE_NAME/* $BUILD_DIR/\n\ncd $BUILD_DIR\ndocker build -t $IMAGE_NAME:$TAG .\n\ndocker login\ndocker push $IMAGE_NAME:$TAG\n\nsed -i \"s|<DOCKER-IMAGE>|${IMAGE_NAME}:${TAG}|g\" $DEPLOYMENT_FILE\n\nkubectl apply -f $DEPLOYMENT_FILE",
+    "docker": "FROM python:3.10\n\nWORKDIR /app\n\nCOPY . /app\n\nRUN pip install mlflow\n\n# Stelle sicher, dass das Verzeichnis existiert\nRUN mkdir -p /mlruns\n\nCMD [\"mlflow\", \"server\", \"--host\", \"0.0.0.0\", \"--port\", \"5000\", \"--backend-store-uri\", \"/mlruns\", \"--artifacts-destination\", \"/mlruns\"]",
+    "kubernetes": "apiVersion: v1\nkind: PersistentVolumeClaim\nmetadata:\n  name: mlrunns-pvc\nspec:\n  accessModes:\n    - ReadWriteOnce\n  resources:\n    requests:\n      storage: 1Gi\n---\napiVersion: v1\nkind: PersistentVolume\nmetadata:\n  name: mlrunns-pv\nspec:\n  capacity:\n    storage: 1Gi\n  accessModes:\n    - ReadWriteOnce\n  hostPath:\n    path: \"/mlruns\"\n---\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: ml-flow-deployment\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: ml-flow\n  template:\n    metadata:\n      labels:\n        app: ml-flow\n    spec:\n      containers:\n        - name: ml-flow\n          image: <DOCKER-IMAGE>\n          ports:\n            - containerPort: 5000\n          volumeMounts:\n            - mountPath: \"/mlruns\"\n              name: mlrunns-volume\n          command: [\"mlflow\"]\n          args: [\"server\", \"--host\", \"0.0.0.0\", \"--port\", \"5000\", \"--backend-store-uri\", \"/mlruns\", \"--artifacts-destination\", \"/mlruns\"]\n      volumes:\n        - name: mlrunns-volume\n          persistentVolumeClaim:\n            claimName: mlrunns-pvc\n---\napiVersion: v1\nkind: Service\nmetadata:\n  name: ml-flow-service\nspec:\n  selector:\n    app: ml-flow\n  ports:\n    - protocol: TCP\n      port: 5000\n      targetPort: 5000\n  type: LoadBalancer"
+  },
+  "incremental_explanatory_training": {
+    "bash": "\nSERVICE_NAME=\"incremental_explanatory_training\"\nIMAGE_NAME=\"{{config.docker_hub_user}}/${SERVICE_NAME}\"\n\nDEPLOYMENT_FILE=\"deployment.yml\"\n\necho \"Building and deploying $SERVICE_NAME\"\n\nBUILD_DIR=\"${SERVICE_NAME}_build\"\nrm -rf $BUILD_DIR\nmkdir -p $BUILD_DIR\nmkdir -p $BUILD_DIR/tools/feedback_ui\ncp -r src/docker/$SERVICE_NAME/* $BUILD_DIR/\ncp -r src/kubernetes/$SERVICE_NAME/* $BUILD_DIR/\ncp -r tools/feedback_ui/* $BUILD_DIR/tools/feedback_ui\n\ncd $BUILD_DIR\ndocker build -t $IMAGE_NAME:$TAG .\ndocker login\ndocker push $IMAGE_NAME:$TAG\n\nsed -i \"s|<DOCKER-IMAGE>|${IMAGE_NAME}:${TAG}|g\" $DEPLOYMENT_FILE\nkubectl apply -f $DEPLOYMENT_FILE",
+    "docker": "FROM python:3.10-slim\n\n# Node + System-Tools\nRUN apt-get update && apt-get install -y \\\n    curl \\\n    git \\\n    build-essential \\\n    lsb-release \\\n    dos2unix \\\n    npm \\\n    && apt-get clean\n\nWORKDIR /app\n\n# Projektcode & UI\nCOPY . /app\nCOPY tools/feedback_ui /app/feedback_ui\n\n# Python-Abhängigkeiten\nRUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu\n\nRUN pip install --upgrade pip && \\\n    pip install apache-airflow==2.8.1 \\\n                mlflow \\\n                flask-session\\\n                apache-superset==3.0.2\\\n                django \\\n                django-cors-headers && \\\n    pip cache purge\n\n# UI-Abhängigkeiten\nWORKDIR /app/feedback_ui\nRUN rm -f package-lock.json && rm -rf node_modules .next\nRUN npm install\n\n# Ports für: UI, Airflow, MLflow, MinIO, Django\nEXPOSE 3000 8080 8181 9100 9500\n\n# Startscript (kommt aus tools/feedback_ui durch dein Bash-Template)\nRUN chmod +x /app/feedback_ui/start_all.sh\nCMD [\"/app/feedback_ui/start_all.sh\"]",
+    "kubernetes": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: feedback-ui-deployment\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: feedback-ui\n  template:\n    metadata:\n      labels:\n        app: feedback-ui\n    spec:\n      containers:\n      - name: feedback-ui\n        image: <DOCKER-IMAGE>\n        ports:\n        - containerPort: 3000\n        - containerPort: 8080\n        - containerPort: 8181\n        - containerPort: 9100\n        - containerPort: 9500\n---\napiVersion: v1\nkind: Service\nmetadata:\n  name: feedback-ui-service\nspec:\n  type: LoadBalancer\n  ports:\n  - protocol: TCP\n    port: 3000\n    targetPort: 3000\n  selector:\n    app: feedback-ui"
+  },
+  "workflow_orchestration": {
+    "bash": "\nSERVICE_NAME=\"workflow_orchestration\"\nIMAGE_NAME=\"{{config.docker_hub_user}}/${SERVICE_NAME}\"\nDEPLOYMENT_FILE=\"deployment.yml\"\necho \"Building and deploying $SERVICE_NAME\"\n\nBUILD_DIR=\"${SERVICE_NAME}_build\"\nrm -rf $BUILD_DIR\nmkdir -p $BUILD_DIR\n\ncp -r src/docker/$SERVICE_NAME/* $BUILD_DIR/\ncp -r src/kubernetes/$SERVICE_NAME/* $BUILD_DIR/\n\ncd $BUILD_DIR\ndocker build -t $IMAGE_NAME:$TAG .\ndocker login\ndocker push $IMAGE_NAME:$TAG\n\nsed -i \"s|<DOCKER-IMAGE>|${IMAGE_NAME}:${TAG}|g\" $DEPLOYMENT_FILE\nkubectl apply -f $DEPLOYMENT_FILE",
+    "docker": "FROM apache/airflow:latest\nUSER root\nRUN apt-get update && apt-get install -y git\nUSER airflow\nRUN pip install --no-cache-dir apache-airflow-providers-docker\nRUN airflow db init\nENV AIRFLOW__WEBSERVER__RBAC=True\nENV AIRFLOW__WEBSERVER__AUTHENTICATE=False\nENV AIRFLOW__API__AUTH_BACKENDS=airflow.api.auth.backend.default\nCOPY webserver_config.py /opt/airflow/webserver_config.py\nRUN airflow users create --username admin --firstname Airflow --lastname Admin --role Admin --email admin@example.com --password admin\nEXPOSE 8080\nENTRYPOINT [\"/entrypoint\"]\nCMD [\"webserver\"]",
+    "kubernetes": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: airflow-deployment\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: airflow\n  template:\n    metadata:\n      labels:\n        app: airflow\n    spec:\n      containers:\n      - name: airflow\n        image: <DOCKER-IMAGE>\n        ports:\n        - containerPort: 8080\n        env:\n        - name: AIRFLOW__CORE__LOAD_EXAMPLES\n          value: \"False\"\n---\napiVersion: v1\nkind: Service\nmetadata:\n  name: airflow-service\nspec:\n  type: LoadBalancer\n  ports:\n  - protocol: TCP\n    port: 8080\n    targetPort: 8080\n  selector:\n    app: airflow",
+    "python": "from airflow.www.security import AirflowSecurityManager\n\nclass PublicAirflowSecurityManager(AirflowSecurityManager):\n    AUTH_ROLE_PUBLIC = 'Admin'  # Öffentlich als Admin (nur Dev!)\n\nSECURITY_MANAGER_CLASS = PublicAirflowSecurityManager"
+  },
+  "code_repository": {
+    "bash": "#\n\necho {{config.docker_hub_user}}\nSERVICE_NAME=\"code_repository\"\nIMAGE_NAME=\"{{config.docker_hub_user}}/${SERVICE_NAME}\"\nDEPLOYMENT_FILE=\"deployment.yml\"\nSERVICE_FILE=\"service.yml\"\necho \"Building and deploying $SERVICE_NAME\"\n\nBUILD_DIR=\"${SERVICE_NAME}_build\"\nrm -rf $BUILD_DIR\nmkdir -p $BUILD_DIR\n\ncp -r src/docker/$SERVICE_NAME/* $BUILD_DIR/\ncp -r src/kubernetes/$SERVICE_NAME/* $BUILD_DIR/\n\ncd $BUILD_DIR\ndocker build -t $IMAGE_NAME:$TAG .\ndocker login\ndocker push $IMAGE_NAME:$TAG\n\nsed -i \"s|<DOCKER-IMAGE>|${IMAGE_NAME}:${TAG}|g\" $DEPLOYMENT_FILE\nkubectl apply -f $DEPLOYMENT_FILE\nkubectl apply -f $SERVICE_FILE",
+    "docker": "FROM gitea/gitea:latest\nEXPOSE 3000 22\nCMD [\"/usr/bin/entrypoint\"]",
+    "kubernetes": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: git-server-deployment\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: git-server\n  template:\n    metadata:\n      labels:\n        app: git-server\n    spec:\n      containers:\n      - name: git-server\n        image: <DOCKER-IMAGE>\n        ports:\n        - containerPort: 3000\n        - containerPort: 22",
+    "kubernetes_service": "apiVersion: v1\nkind: Service\nmetadata:\n  name: git-server-service\nspec:\n  type: LoadBalancer\n  ports:\n  - name: http\n    protocol: TCP\n    port: 3000\n    targetPort: 3000\n  - name: ssh\n    protocol: TCP\n    port: 22\n    targetPort: 22\n  selector:\n    app: git-server"
+  },
+  "serve_model_pipelines": {
+    "bash": "\n\nSERVICE_NAME=\"serve_model_pipelines\"\n\nIMAGE_NAME=\"{{config.docker_hub_user}}/${SERVICE_NAME}\"\nDEPLOYMENT_FILE=\"deployment.yml\"\necho $SERVICE_NAME\n\nBUILD_DIR=\"${SERVICE_NAME}_build\"\nrm -rf $BUILD_DIR\nmkdir -p $BUILD_DIR\n\n# Erstelle das Start-Skript im Build-Ordner\ncat <<EOF > $BUILD_DIR/start.sh\n#!/bin/bash\nexec jupyter lab \\\n    --port=8050 \\\n    --ip=0.0.0.0 \\\n    --allow-root \\\n    --no-browser \\\n    --NotebookApp.token='' \\\n    --NotebookApp.password='' \\\n    --NotebookApp.allow_origin='*' \\\n    --NotebookApp.disable_check_xsrf=True \\\n    --NotebookApp.tornado_settings='{\"headers\": {\"X-Frame-Options\": \"ALLOWALL\", \"Content-Security-Policy\": \"frame-ancestors *\"}}'\nEOF\n\nchmod +x $BUILD_DIR/start.sh\n\ncp -r src/docker/$SERVICE_NAME/* $BUILD_DIR/\ncp -r tools/model_selection_config/* $BUILD_DIR/\ncp -r src/kubernetes/$SERVICE_NAME/* $BUILD_DIR/\n\ncd $BUILD_DIR\ndocker build -t $IMAGE_NAME:$TAG .\ndocker login\ndocker push $IMAGE_NAME:$TAG\n\nsed -i \"s|<DOCKER-IMAGE>|${IMAGE_NAME}:${TAG}|g\" $DEPLOYMENT_FILE\nkubectl apply -f $DEPLOYMENT_FILE",
+    "docker": "FROM python:3.10\n\n# Upgrade pip und installiere JupyterLab\n\nRUN pip install --upgrade pip\nRUN pip install jupyterlab xgboost mlflow tensorflow\n\n# Kopiere das zuvor erstellte Start-Skript ins Image\nCOPY start.sh /usr/local/bin/generate_start.sh\n\n# Mache das Skript ausführbar\nRUN chmod +x /usr/local/bin/generate_start.sh\n\nEXPOSE 8050\n\n# Setze das Start-Skript als CMD\nCMD [\"/usr/local/bin/generate_start.sh\"]",
+    "kubernetes": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: ml-serving-deployment\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: ml-serving\n  template:\n    metadata:\n      labels:\n        app: ml-serving\n    spec:\n      containers:\n      - name: ml-serving\n        image: <DOCKER-IMAGE>\n        ports:\n        - containerPort: 8050\n\n---\napiVersion: v1\nkind: Service\nmetadata:\n  name: ml-serving\nspec:\n  type: LoadBalancer\n  ports:\n  - protocol: TCP\n    port: 8050\n    targetPort: 8050\n    nodePort: 32048\n  selector:\n    app: ml-serving"
+  },
+  "xai_serving": {
+    "bash": "\n\nSERVICE_NAME=\"xai_serving\"\n\nIMAGE_NAME=\"{{config.docker_hub_user}}/${SERVICE_NAME}\"\nDEPLOYMENT_FILE=\"deployment.yml\"\necho $SERVICE_NAME\n\nBUILD_DIR=\"${SERVICE_NAME}_build\"\nrm -rf $BUILD_DIR\nmkdir -p $BUILD_DIR\n\n# Erstelle das Start-Skript im Build-Ordner\ncat <<EOF > $BUILD_DIR/start.sh\n#!/bin/bash\nexec jupyter lab \\\n    --port=8040 \\\n    --ip=0.0.0.0 \\\n    --allow-root \\\n    --no-browser \\\n    --NotebookApp.token='' \\\n    --NotebookApp.password='' \\\n    --NotebookApp.allow_origin='*' \\\n    --NotebookApp.disable_check_xsrf=True \\\n    --NotebookApp.tornado_settings='{\"headers\": {\"X-Frame-Options\": \"ALLOWALL\", \"Content-Security-Policy\": \"frame-ancestors *\"}}'\nEOF\n\nchmod +x $BUILD_DIR/start.sh\n\ncp -r src/docker/$SERVICE_NAME/* $BUILD_DIR/\ncp -r src/kubernetes/$SERVICE_NAME/* $BUILD_DIR/\n\ncd $BUILD_DIR\ndocker build -t $IMAGE_NAME:$TAG .\ndocker login\ndocker push $IMAGE_NAME:$TAG\n\nsed -i \"s|<DOCKER-IMAGE>|${IMAGE_NAME}:${TAG}|g\" $DEPLOYMENT_FILE\nkubectl apply -f $DEPLOYMENT_FILE",
+    "docker": "FROM python:3.10\n\n# Upgrade pip und installiere JupyterLab\nRUN pip install --upgrade pip\nRUN pip install jupyterlab xgboost tensorflow mlflow\n\n# Kopiere das zuvor erstellte Start-Skript ins Image\nCOPY start.sh /usr/local/bin/generate_start.sh\n\n# Mache das Skript ausführbar\nRUN chmod +x /usr/local/bin/generate_start.sh\n\nEXPOSE 8040\n\n# Setze das Start-Skript als CMD\nCMD [\"/usr/local/bin/generate_start.sh\"]",
+    "kubernetes": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: xai-deployment\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: xai-serving\n  template:\n    metadata:\n      labels:\n        app: xai-serving\n    spec:\n      containers:\n      - name: xai-serving\n        image: <DOCKER-IMAGE>\n        ports:\n        - containerPort: 8040\n\n---\napiVersion: v1\nkind: Service\nmetadata:\n  name: xai-serving\nspec:\n  type: LoadBalancer\n  ports:\n  - protocol: TCP\n    port: 8040\n    targetPort: 8040\n    nodePort: 32049\n  selector:\n    app: xai-serving"
+  }
+}

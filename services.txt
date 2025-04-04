@@ -1,0 +1,35 @@
+Service Name: evidently-service
+Namespace: default
+Cluster IP: 10.96.71.227
+Ports: 8000/TCP
+
+Service Name: jupyter-notebook-service
+Namespace: default
+Cluster IP: 10.101.10.102
+Ports: 80/TCP
+
+Service Name: kubernetes
+Namespace: default
+Cluster IP: 10.96.0.1
+Ports: 443/TCP
+
+Service Name: minio-1741335297
+Namespace: default
+Cluster IP: 10.99.200.76
+Ports: 9000/TCP
+
+Service Name: minio-1741335297-console
+Namespace: default
+Cluster IP: 10.98.138.69
+Ports: 9001/TCP
+
+Service Name: ml-flow-service
+Namespace: default
+Cluster IP: 10.99.171.68
+Ports: 5000/TCP
+
+Service Name: kube-dns
+Namespace: kube-system
+Cluster IP: 10.96.0.10
+Ports: 53/UDP, 53/TCP, 9153/TCP
+

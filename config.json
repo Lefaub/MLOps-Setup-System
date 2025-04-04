@@ -1,0 +1,33 @@
+{
+  "script_types": [
+    {
+      "name": "bash",
+      "output_path": "build_scripts",
+      "extension": "sh"
+    },
+    {
+      "name": "docker",
+      "output_path": "src/docker",
+      "extension": ""
+    },
+    {
+      "name": "kubernetes",
+      "output_path": "src/kubernetes",
+      "extension": "yml"
+    }
+  ],
+  "rules": [
+    {
+      "condition": {
+        "Model_registry": true
+      },
+      "script_type": "bash"
+    },
+    {
+      "condition": {
+        "datatype": "Time-series"
+      },
+      "script_type": "kubernetes"
+    }
+  ]
+}
