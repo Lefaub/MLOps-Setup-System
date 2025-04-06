@@ -19,5 +19,5 @@ Setting up the MLOps system requires several steps as prerequisites.
 <ul>
   <li><a href="https://www.uni-hildesheim.de/gitlab/explain/data-drift-simulator">Life Data and Drift Simulation</a></li>
   <li><a href="https://github.com/malikhunain/Optimized-Web-Interface">Image Drift Detection UI</a></li>
-  <li><a hred="https://github.com/Amirrgrbn/EXPLAIN_architecture">XAI and Feedback UI</a></li>
+  <li><a href="https://github.com/Amirrgrbn/EXPLAIN_architecture">XAI and Feedback UI</a></li>
 </ul>
