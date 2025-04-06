@@ -14,6 +14,16 @@ Setting up the MLOps system requires several steps as prerequisites.
   <li>pip install flask kubernetes</li>
 </ol>
 
+<h2>Running the UI for the MLOps platform setup</h2>
+<ol>
+  <li>Clone this repository on the master node and clone the Tools below in the respective folders</li>
+  <li>Run "sudo python main.py"</li>
+  <li>Configure the data type, version tag, dockerhub name and all required features on the homepage.</li>
+  <li>Click on "Generate" and on "Go to running platform services" button.</li>
+  <li>Wait until containers are set up. Click on "ML pipeline code generation" and "Run ML pipeline".</li>
+  <li>A new tab opens which allows to run scripts that enable the user to set up a ML pipelines, connecting the containers, selecting models, start training, inference services, or XAI methods.</li>
+</ol>
+
 <h2>Tools</h2>
 
 <ul>
