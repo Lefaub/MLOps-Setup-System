@@ -1,5 +1,5 @@
 <h1>End to end Explanatory ML System Architecture</h1>
-This is the repository for the public deliverable in the research project EXPLAIN. It contains the code of the final explanatory MLOps system. 
+This repository is part of the public deliverable D 6.7 in the research project EXPLAIN. It contains the code of the final explanatory MLOps system. The system is a prototype, demonstrating model-based automation in MLOps setups.
 
 <h2>Prerequisites</h2>
 Setting up the MLOps system requires several steps as prerequisites. 
