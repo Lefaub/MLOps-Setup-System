@@ -31,3 +31,8 @@ Setting up the MLOps system requires several steps as prerequisites.
   <li><a href="https://github.com/malikhunain/Optimized-Web-Interface">Image Drift Detection UI</a></li>
   <li><a href="https://github.com/Amirrgrbn/EXPLAIN_architecture">XAI and Feedback UI</a></li>
 </ul>
+
+<h2>Acknowledgements</h2>
+This work is supported by the project EXPLAIN, funded by the German Federal Ministry of Education under grant 01—S22030E. Any opinions expressed herein are solely by the authors and not the funding agency. 
+
+This project is licensed under the [MIT License](./LICENSE).
