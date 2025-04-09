@@ -35,5 +35,5 @@ Setting up the MLOps system requires several prerequisite steps.
 
 <h2>Acknowledgements</h2>
 This work is developed by the Software Systems Engineering Group of the University of Hildesheim and supported by the project EXPLAIN, funded by the German Federal Ministry of Education under grant 01—S22030E. Any opinions expressed herein are solely by the authors and not the funding agency. 
-
+<br>
 This project is licensed under the [MIT License](./LICENSE).
