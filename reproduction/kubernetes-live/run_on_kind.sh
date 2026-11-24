@@ -20,7 +20,7 @@ echo "The cluster will remain for inspection. Cleanup: kind delete cluster --nam
 repo="$runroot/MLOps-Setup-System"
 git -c core.autocrlf=false clone https://github.com/Lefaub/MLOps-Setup-System.git "$repo"
 git -C "$repo" checkout --detach "$commit"
-server="${MINIO_IMAGE:-docker.io/minio/minio:RELEASE.2025-04-22T22-12-26Z}"
+server="${MINIO_IMAGE:-docker.io/jcometki/minio@sha256:3f97c5651cb6662b880c787a232b6b34fec8d8922e08d6617b25d241a21164bb}"
 client="${CLIENT_IMAGE:-docker.io/library/python:3.12-slim}"
 pin() {
   docker pull "$1" >&2
