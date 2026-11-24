@@ -1,0 +1,17 @@
+name: Feature form regression
+on:
+  push:
+    paths: ['feature_model.fm', 'html_generation.py', 'reproduction/ui-audit/**', '.github/workflows/feature-ui-regression.yml']
+  pull_request:
+    paths: ['feature_model.fm', 'html_generation.py', 'reproduction/ui-audit/**', '.github/workflows/feature-ui-regression.yml']
+permissions:
+  contents: read
+jobs:
+  regressions:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - run: node reproduction/ui-audit/test_dependencies.cjs

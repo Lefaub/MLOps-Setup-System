@@ -98,8 +98,7 @@
         "label": "User guided model selection",
         "type": "checkbox",
         "dependencies": {
-            "requires": ["model_selection_activation:true"],
-            "requires": ["data_streaming_activation:true"]
+            "requires": ["model_selection_activation:true", "data_streaming_activation:true"]
         }
     },
     {

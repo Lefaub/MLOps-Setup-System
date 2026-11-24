@@ -127,6 +127,20 @@ def generate_html(form_data, saved_values=None):
         function updateDependencies() {
             const formData = JSON.parse(document.getElementById('form-data').textContent);
 
+            // Compute exclusions before updating individual lock states. A
+            // later field must not overwrite a lock set by an earlier field.
+            const excludedIds = new Set();
+            formData.forEach(field => {
+                const source = document.getElementById(field.name);
+                if (!source || !source.checked || excludedIds.has(field.name)) return;
+                for (const id of field.constraints?.excludes || []) {
+                    const excluded = document.getElementById(id);
+                    if (!excluded) continue;
+                    excludedIds.add(id);
+                    if (excluded.type === "checkbox") excluded.checked = false;
+                }
+            });
+
             formData.forEach(field => {
                 const element = document.getElementById(field.name);
                 if (!element) return;
@@ -149,19 +163,7 @@ def generate_html(form_data, saved_values=None):
                     });
                 }
 
-                // "excludes" Constraint prüfen
-                if (field.constraints && field.constraints.excludes) {
-                    field.constraints.excludes.forEach(excludedField => {
-                        const excludedElement = document.getElementById(excludedField);
-                        if (excludedElement) {
-                            excludedElement.disabled = element.checked;
-                            document.querySelector(`label[for="${excludedField}"]`).style.color = element.checked ? "gray" : "";
-                            if (element.checked && excludedElement.type === "checkbox") {
-                                excludedElement.checked = false;
-                            }
-                        }
-                    });
-                }
+                enabled = enabled && !excludedIds.has(field.name);
 
                 element.disabled = !enabled;
                 document.querySelector(`label[for="${field.name}"]`).style.color = enabled ? "" : "gray";
