@@ -81,15 +81,15 @@ def preparation(repo, gen, folder, profile_id):
         (folder / name).write_bytes((repo / name).read_bytes())
     (folder / "kubernetes_resources.txt").write_text("=== Services ===\n\n=== Pods ===\n")
     generation(gen, folder, "code_templates.json", fields, profile)
-    platform = sorted({p.relative_to(folder).as_posix(): sha(p.read_bytes())
-                       for dr in ("src", "build_scripts", "deployment")
-                       for p in (folder / dr).rglob("*") if p.is_file()})
+    platform = dict(sorted({p.relative_to(folder).as_posix(): sha(p.read_bytes())
+                            for dr in ("src", "build_scripts", "deployment")
+                            for p in (folder / dr).rglob("*") if p.is_file()}.items()))
     manifest = folder / "src/kubernetes/data_repository/deployment.yml"
     docs = list(yaml.safe_load_all(manifest.read_text()))
     deploys = [doc for doc in docs if doc and doc.get("kind") == "Deployment"
                and doc["metadata"]["name"] == SERVER]
     check(len(deploys) == 1, "unexpected generated storage deployment")
-    return fields, profile, sha(profile_bytes), dict(platform), deploys[0]
+    return fields, profile, sha(profile_bytes), platform, deploys[0]
 
 
 def storage_resources(deploy, server_image):
