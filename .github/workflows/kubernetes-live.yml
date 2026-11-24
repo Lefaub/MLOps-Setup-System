@@ -1,0 +1,42 @@
+name: Kubernetes live storage smoke test
+on:
+  push:
+    branches: [academia/kubernetes-live-smoke]
+    paths: ['.github/workflows/kubernetes-live.yml', 'reproduction/kubernetes-live/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  live-storage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Install kind
+        run: |
+          GOBIN="$RUNNER_TEMP/bin" go install sigs.k8s.io/kind@v0.27.0
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+      - name: Run both profiles on a dedicated kind cluster
+        working-directory: reproduction/kubernetes-live
+        run: bash run_on_kind.sh both
+      - name: Collect run evidence
+        if: always()
+        run: |
+          mkdir -p live-evidence
+          shopt -s nullglob
+          for run in reproduction/kubernetes-live/paper-live-*; do
+            if [[ -f "$run/evidence/evidence.json" ]]; then
+              cp "$run/evidence/evidence.json" live-evidence/evidence.json
+              python -m json.tool live-evidence/evidence.json
+            fi
+            if [[ -f "$run/runner.txt" ]]; then cp "$run/runner.txt" live-evidence/runner.txt; fi
+          done
+      - name: Save the evidence files
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: kubernetes-live-evidence
+          path: live-evidence/
+          if-no-files-found: warn
