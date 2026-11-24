@@ -230,8 +230,12 @@ def main():
             current = preliminary.call("config", "current-context", namespaced=False).strip()
             check(current == args.context, "dedicated kubeconfig current context does not match")
             nodes = preliminary.get("nodes", namespaced=False)["items"]
-            check(nodes and all("io.x-k8s.kind.role" in n["metadata"].get("labels", {}) for n in nodes),
-                  "target nodes are not recognized as kind")
+            cluster_name = args.context.removeprefix("kind-")
+            role_labels = ("node-role.kubernetes.io/control-plane", "node-role.kubernetes.io/worker")
+            check(nodes and all(n["metadata"]["name"].startswith(cluster_name + "-") and
+                                any(role in n["metadata"].get("labels", {}) for role in role_labels)
+                                for n in nodes),
+                  "target nodes are not recognized as the dedicated kind cluster")
             evidence["kubernetes_version"] = json.loads(preliminary.call("version", "-o", "json",
                                                                          namespaced=False, timeout=45))
             evidence["nodes"] = [{"architecture": n["status"]["nodeInfo"]["architecture"],
