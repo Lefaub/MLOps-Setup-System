@@ -1,0 +1,45 @@
+name: Headless application live smoke test
+on:
+  push:
+    branches: [academia/kubernetes-live-smoke]
+    paths:
+      - '.github/workflows/application-live.yml'
+      - 'reproduction/application-live/**'
+      - 'reproduction/kubernetes-live/supplement/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  headless-application:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Install kind
+        run: |
+          GOBIN="$RUNNER_TEMP/bin" go install sigs.k8s.io/kind@v0.27.0
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+      - name: Run both profiles without the GUI
+        working-directory: reproduction/application-live
+        run: bash run_on_kind.sh both
+      - name: Collect application evidence
+        if: always()
+        run: |
+          mkdir -p application-evidence
+          shopt -s nullglob
+          for run in reproduction/application-live/application-live-*; do
+            if [[ -f "$run/evidence/evidence.json" ]]; then
+              cp "$run/evidence/evidence.json" application-evidence/evidence.json
+              python -m json.tool application-evidence/evidence.json
+            fi
+            if [[ -f "$run/runner.txt" ]]; then cp "$run/runner.txt" application-evidence/runner.txt; fi
+          done
+      - name: Save application evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: application-live-evidence
+          path: application-evidence/
+          if-no-files-found: warn
