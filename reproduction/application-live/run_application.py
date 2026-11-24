@@ -111,20 +111,20 @@ def storage_resources(deploy, server_image):
     return deploy, service
 
 
-def registry_resources(client_image):
+def registry_resources(registry_image):
     labels = {"app": REGISTRY}
-    command = ("python -m pip install --no-input --retries 2 --timeout 30 'mlflow==2.16.2' && "
-               "exec mlflow server --host 0.0.0.0 --port 5000 "
-               "--backend-store-uri sqlite:////tmp/mlflow.db --serve-artifacts "
-               "--artifacts-destination /tmp/mlartifacts")
     deployment = {
         "apiVersion": "apps/v1", "kind": "Deployment", "metadata": {"name": REGISTRY},
         "spec": {"replicas": 1, "selector": {"matchLabels": labels},
                  "template": {"metadata": {"labels": labels}, "spec": {
                      "automountServiceAccountToken": False,
-                     "containers": [{"name": REGISTRY, "image": client_image,
+                     "containers": [{"name": REGISTRY, "image": registry_image,
                                      "ports": [{"name": "http", "containerPort": 5000}],
-                                     "command": ["sh", "-ec"], "args": [command],
+                                     "command": ["mlflow"],
+                                     "args": ["server", "--host", "0.0.0.0", "--port", "5000",
+                                              "--backend-store-uri", "sqlite:////tmp/mlflow.db",
+                                              "--serve-artifacts", "--artifacts-destination",
+                                              "/tmp/mlartifacts"],
                                      "startupProbe": {"tcpSocket": {"port": "http"},
                                                       "periodSeconds": 5, "failureThreshold": 60},
                                      "readinessProbe": {"tcpSocket": {"port": "http"},
@@ -177,6 +177,25 @@ def discovered(cluster, timeout):
             return f"{fresh_ip}:{port}", "\n".join(inventory) + "\n", ready
         time.sleep(2)
     raise RuntimeError("no ready storage endpoint before timeout")
+
+
+def rollout(cluster, deployment, timeout):
+    try:
+        cluster.call("rollout", "status", f"deployment/{deployment}", f"--timeout={timeout}s",
+                     timeout=timeout + 30)
+    except (RuntimeError, subprocess.SubprocessError) as exc:
+        diagnostics = []
+        for title, command in (
+                ("pods", ("get", "pods", "-l", f"app={deployment}", "-o", "wide")),
+                ("describe", ("describe", "pods", "-l", f"app={deployment}")),
+                ("logs", ("logs", f"deployment/{deployment}", "--all-containers=true", "--tail=120"))):
+            try:
+                value = cluster.call(*command, timeout=45).strip()
+            except (RuntimeError, subprocess.SubprocessError) as diagnostic_error:
+                value = f"diagnostic unavailable: {diagnostic_error}"
+            diagnostics.append(f"--- {title} ---\n{value[-12000:]}")
+        raise RuntimeError(f"deployment/{deployment} did not become ready:\n" +
+                           "\n".join(diagnostics)) from exc
 
 
 def check_binding(source, endpoint, profile):
@@ -248,6 +267,7 @@ def main():
     parser.add_argument("--kubeconfig", type=Path)
     parser.add_argument("--server-image")
     parser.add_argument("--client-image")
+    parser.add_argument("--registry-image")
     parser.add_argument("--profile", choices=("both",) + PROFILES, default="both")
     parser.add_argument("--timeout", type=int, default=720)
     args = parser.parse_args()
@@ -256,9 +276,9 @@ def main():
     check(args.kubeconfig and args.kubeconfig.is_file(), "a dedicated kubeconfig is required")
     check(re.fullmatch(r"kind-application-live(?:-[a-z0-9-]+)?", args.context or ""),
           "a dedicated kind-application-live context is required")
-    for value in (args.server_image, args.client_image):
+    for value in (args.server_image, args.client_image, args.registry_image):
         check(value and re.fullmatch(r"[-./a-zA-Z0-9_:]+@sha256:[0-9a-f]{64}", value),
-              "both images must be full references pinned by digest")
+              "all images must be full references pinned by digest")
 
     repo, out = args.repo.resolve(), args.out.resolve()
     gen = verified_source(repo)
@@ -267,7 +287,8 @@ def main():
                 "mode": "execute", "configuration_mode": "direct generator call; GUI bypassed",
                 "fixture_scope": "deterministic synthetic fixtures", "cases": {},
                 "source": "git and sha256 verified",
-                "images": {"server": args.server_image, "client": args.client_image},
+                "images": {"server": args.server_image, "client": args.client_image,
+                           "registry": args.registry_image},
                 "dependency_pins": {"mlflow": "2.16.2", "scikit-learn": "1.5.2",
                                     "numpy": "1.26.4", "pandas": "2.2.3", "pillow": "11.0.0",
                                     "minio": "7.2.15", "urllib3": "2.3.0", "joblib": "1.4.2"}}
@@ -306,13 +327,12 @@ def main():
                                        "MINIO_ROOT_PASSWORD": secrets.token_urlsafe(28)}}))
                     row["stage"] = "deploy_services"
                     storage, storage_service = storage_resources(deploy, args.server_image)
-                    registry, registry_service = registry_resources(args.client_image)
+                    registry, registry_service = registry_resources(args.registry_image)
                     for resource in (storage, storage_service, registry, registry_service):
                         cluster.apply(resource)
-                    cluster.call("rollout", "status", "deployment/minio", f"--timeout={args.timeout}s",
-                                 timeout=args.timeout + 30)
-                    cluster.call("rollout", "status", "deployment/mlflow", f"--timeout={args.timeout}s",
-                                 timeout=args.timeout + 30)
+                    service_timeout = min(args.timeout, 300)
+                    rollout(cluster, SERVER, service_timeout)
+                    rollout(cluster, REGISTRY, service_timeout)
                     row["checks"]["kubernetes_service_rollout"] = True
                     endpoint, inventory, ready = discovered(cluster, args.timeout)
                     (folder / "kubernetes_resources.txt").write_text(inventory)

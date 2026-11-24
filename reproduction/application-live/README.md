@@ -8,6 +8,8 @@ kind cluster and is executed with deterministic synthetic fixtures.
 For each profile the probe then performs model training, an MLflow model
 registry write/read, inference, an explanation, feedback capture, retraining,
 a second registry write/read, and an evidence-object round trip through MinIO.
+The MinIO, Python client, and official MLflow server images are resolved to
+immutable digests before the cluster is created.
 
 Success requires `mode: execute`, `application_smoke_pass` for both cases, and
 every boolean check in both the outer case and nested application result to be

@@ -22,6 +22,7 @@ git -c core.autocrlf=false clone https://github.com/Lefaub/MLOps-Setup-System.gi
 git -C "$repo" checkout --detach "$commit"
 server="${MINIO_IMAGE:-docker.io/jcometki/minio@sha256:3f97c5651cb6662b880c787a232b6b34fec8d8922e08d6617b25d241a21164bb}"
 client="${CLIENT_IMAGE:-docker.io/library/python:3.12-slim}"
+registry="${MLFLOW_IMAGE:-ghcr.io/mlflow/mlflow:v2.16.2}"
 pin() {
   docker pull "$1" >&2
   if [[ "$1" == *@sha256:* ]]; then printf '%s\n' "$1"
@@ -30,6 +31,7 @@ pin() {
 }
 server_pin="$(pin "$server")"
 client_pin="$(pin "$client")"
+registry_pin="$(pin "$registry")"
 kubeconfig="$runroot/kubeconfig"
 kind create cluster --name "$cluster" --kubeconfig "$kubeconfig" --wait 3m \
   --image 'kindest/node:v1.32.2@sha256:f226345927d7e348497136874b6d207e0b32cc52154ad8323129352923a3142f'
@@ -40,5 +42,5 @@ printf 'kind=%s\nnode_image=%s\nhost=%s\n' "$(kind version)" \
   "$(uname -sm)" > "$runroot/runner.txt"
 "$runroot/venv/bin/python" "$kit/run_application.py" --repo "$repo" --out "$runroot/evidence" \
   --execute --profile "$profile" --kubeconfig "$kubeconfig" --context "kind-$cluster" \
-  --server-image "$server_pin" --client-image "$client_pin"
+  --server-image "$server_pin" --client-image "$client_pin" --registry-image "$registry_pin"
 echo "Review before sharing: $runroot/evidence/evidence.json and $runroot/runner.txt"
