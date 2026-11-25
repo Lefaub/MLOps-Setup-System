@@ -1,0 +1,437 @@
+{
+  "model_sha256": "f0bee9ac207f3b5074292503824e4c0b7d1e6254a73565003e18ae6660d184d4",
+  "named_fields": 44,
+  "boolean_features": 39,
+  "satisfiable": true,
+  "dead_features": [],
+  "false_optional_features_under_mandatory_root": [],
+  "named_checkbox_constraint_declarations": 32,
+  "unique_clauses": 26,
+  "duplicate_declarations": 6,
+  "redundant_unique_clauses": [],
+  "omitted_nonboolean_rules": [
+    {
+      "field": "memory_size",
+      "rule": "requires",
+      "target": "s3_type_database_activation",
+      "target_value": "true"
+    }
+  ],
+  "duplicate_json_keys_last_entry_wins": [
+    {
+      "key": "requires",
+      "discarded": [
+        "model_selection_activation:true"
+      ],
+      "effective": [
+        "data_streaming_activation:true"
+      ]
+    }
+  ],
+  "profile_satisfiability": {
+    "time_series": true,
+    "visual_inspection": true
+  },
+  "clauses": [
+    {
+      "literals": [
+        "-xai_selection_activation",
+        "+model_selection_activation"
+      ],
+      "declarations": [
+        {
+          "field": "xai_selection_activation",
+          "rule": "requires",
+          "target": "model_selection_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-xai_feedback_gui_for_time_series_activation",
+        "+inference_feedback_gui_for_time_series_activation"
+      ],
+      "declarations": [
+        {
+          "field": "xai_feedback_gui_for_time_series_activation",
+          "rule": "requires",
+          "target": "inference_feedback_gui_for_time_series_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-xai_feedback_gui_for_image_activation",
+        "+inference_feedback_gui_for_image_activation"
+      ],
+      "declarations": [
+        {
+          "field": "xai_feedback_gui_for_image_activation",
+          "rule": "requires",
+          "target": "inference_feedback_gui_for_image_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-workflow_orchestration_activation",
+        "+packaging_and_containerization_activation"
+      ],
+      "declarations": [
+        {
+          "field": "workflow_orchestration_activation",
+          "rule": "requires",
+          "target": "packaging_and_containerization_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-visualize_explanations_activation",
+        "+xai_selection_activation"
+      ],
+      "declarations": [
+        {
+          "field": "visualize_explanations_activation",
+          "rule": "requires",
+          "target": "xai_selection_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-user_guided_model_selection_activation",
+        "+data_streaming_activation"
+      ],
+      "declarations": [
+        {
+          "field": "user_guided_model_selection_activation",
+          "rule": "requires",
+          "target": "data_streaming_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-tpu_cluster_activation",
+        "-gpu_cluster_activation"
+      ],
+      "declarations": [
+        {
+          "field": "gpu_cluster_activation",
+          "rule": "excludes",
+          "target": "tpu_cluster_activation",
+          "target_value": "false"
+        },
+        {
+          "field": "tpu_cluster_activation",
+          "rule": "excludes",
+          "target": "gpu_cluster_activation",
+          "target_value": "false"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-tpu_cluster_activation",
+        "-fpga_cluster_activation"
+      ],
+      "declarations": [
+        {
+          "field": "tpu_cluster_activation",
+          "rule": "excludes",
+          "target": "fpga_cluster_activation",
+          "target_value": "false"
+        },
+        {
+          "field": "fpga_cluster_activation",
+          "rule": "excludes",
+          "target": "tpu_cluster_activation",
+          "target_value": "false"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-tpu_cluster_activation",
+        "-cpu_cluster_activation"
+      ],
+      "declarations": [
+        {
+          "field": "cpu_cluster_activation",
+          "rule": "excludes",
+          "target": "tpu_cluster_activation",
+          "target_value": "false"
+        },
+        {
+          "field": "tpu_cluster_activation",
+          "rule": "excludes",
+          "target": "cpu_cluster_activation",
+          "target_value": "false"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-s3_type_database_activation",
+        "+data_repository_activation"
+      ],
+      "declarations": [
+        {
+          "field": "s3_type_database_activation",
+          "rule": "requires",
+          "target": "data_repository_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-packaging_and_containerization_activation",
+        "+model_serialization_activation"
+      ],
+      "declarations": [
+        {
+          "field": "packaging_and_containerization_activation",
+          "rule": "requires",
+          "target": "model_serialization_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-model_visualization_for_evaluation_activation",
+        "+model_selection_activation"
+      ],
+      "declarations": [
+        {
+          "field": "model_visualization_for_evaluation_activation",
+          "rule": "requires",
+          "target": "model_selection_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-model_training_and_update_activation",
+        "+model_selection_activation"
+      ],
+      "declarations": [
+        {
+          "field": "model_training_and_update_activation",
+          "rule": "requires",
+          "target": "model_selection_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-ml_performance_gui_activation",
+        "+testing_activation"
+      ],
+      "declarations": [
+        {
+          "field": "ml_performance_gui_activation",
+          "rule": "requires",
+          "target": "testing_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-live_testing_activation",
+        "+testing_activation"
+      ],
+      "declarations": [
+        {
+          "field": "live_testing_activation",
+          "rule": "requires",
+          "target": "testing_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-live_data_and_drift_simulation_activation",
+        "+data_streaming_activation"
+      ],
+      "declarations": [
+        {
+          "field": "live_data_and_drift_simulation_activation",
+          "rule": "requires",
+          "target": "data_streaming_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-inference_feedback_gui_for_time_series_activation",
+        "+incremental_explanatory_training_activation"
+      ],
+      "declarations": [
+        {
+          "field": "inference_feedback_gui_for_time_series_activation",
+          "rule": "requires",
+          "target": "incremental_explanatory_training_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-inference_feedback_gui_for_image_activation",
+        "+incremental_explanatory_training_activation"
+      ],
+      "declarations": [
+        {
+          "field": "inference_feedback_gui_for_image_activation",
+          "rule": "requires",
+          "target": "incremental_explanatory_training_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-hyperparameter_tuning_activation",
+        "+model_training_and_update_activation"
+      ],
+      "declarations": [
+        {
+          "field": "hyperparameter_tuning_activation",
+          "rule": "requires",
+          "target": "model_training_and_update_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-gpu_cluster_activation",
+        "-fpga_cluster_activation"
+      ],
+      "declarations": [
+        {
+          "field": "gpu_cluster_activation",
+          "rule": "excludes",
+          "target": "fpga_cluster_activation",
+          "target_value": "false"
+        },
+        {
+          "field": "fpga_cluster_activation",
+          "rule": "excludes",
+          "target": "gpu_cluster_activation",
+          "target_value": "false"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-gpu_cluster_activation",
+        "-cpu_cluster_activation"
+      ],
+      "declarations": [
+        {
+          "field": "cpu_cluster_activation",
+          "rule": "excludes",
+          "target": "gpu_cluster_activation",
+          "target_value": "false"
+        },
+        {
+          "field": "gpu_cluster_activation",
+          "rule": "excludes",
+          "target": "cpu_cluster_activation",
+          "target_value": "false"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-fpga_cluster_activation",
+        "-cpu_cluster_activation"
+      ],
+      "declarations": [
+        {
+          "field": "cpu_cluster_activation",
+          "rule": "excludes",
+          "target": "fpga_cluster_activation",
+          "target_value": "false"
+        },
+        {
+          "field": "fpga_cluster_activation",
+          "rule": "excludes",
+          "target": "cpu_cluster_activation",
+          "target_value": "false"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-explanatory_monitoring_activation",
+        "+monitoring_activation"
+      ],
+      "declarations": [
+        {
+          "field": "explanatory_monitoring_activation",
+          "rule": "requires",
+          "target": "monitoring_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-drift_detection_activation",
+        "+monitoring_activation"
+      ],
+      "declarations": [
+        {
+          "field": "drift_detection_activation",
+          "rule": "requires",
+          "target": "monitoring_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-data_labeling_activation",
+        "+data_collection_activation"
+      ],
+      "declarations": [
+        {
+          "field": "data_labeling_activation",
+          "rule": "requires",
+          "target": "data_collection_activation",
+          "target_value": "true"
+        }
+      ]
+    },
+    {
+      "literals": [
+        "-automl_activation",
+        "+model_training_and_update_activation"
+      ],
+      "declarations": [
+        {
+          "field": "automl_activation",
+          "rule": "requires",
+          "target": "model_training_and_update_activation",
+          "target_value": "true"
+        }
+      ]
+    }
+  ]
+}

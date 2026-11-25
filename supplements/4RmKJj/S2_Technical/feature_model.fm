@@ -1,0 +1,411 @@
+[
+    {
+        "type": "header",
+        "content": "MLOps Platform Settings"
+    },
+    {
+        "type": "header2",
+        "content": "General settings"
+    },
+    {
+    	"name": "tag",
+    	"label": "Define a tag",
+    	"type": "text",
+    	"placeholder": "v1.0"
+    },
+    {
+    	"name": "docker_hub_user",
+    	"label": "Enter your docker hub username",
+    	"type": "text",
+    	"placeholder": "leonhard251285"
+    },
+    {
+        "name": "data_type",
+        "label": "Datatype",
+        "type": "dropdown",
+        "options": ["Time-Series", "Image", "Other"]
+    },
+    {
+        "type": "header",
+        "content": "Serving"
+    },
+    {
+        "type": "header2",
+        "content": "Model serialization"
+    },
+    {
+        "name": "model_serialization_activation",
+        "label": "Model serialization",
+        "type": "checkbox"
+    },
+    {
+        "name": "packaging_and_containerization_activation",
+        "label": "Packaging and Containerization",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["model_serialization_activation:true"]
+        }
+    },
+    {
+        "type": "header2",
+        "content": "Workflow orchestration"
+    },
+    {
+        "name": "workflow_orchestration_activation",
+        "label": "Workflow orchestration",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["packaging_and_containerization_activation:true"]
+        }
+    },  
+    {
+        "type": "header2",
+        "content": "Serve model pipelines"
+    },
+    {
+        "type": "header2",
+        "content": "Xai serving"
+    },      
+    {
+        "name": "xai_serving_activation",
+        "label": "XAI serving",
+        "type": "checkbox"
+    },
+    {
+        "type": "header",
+        "content": "Model building"
+    },
+    {
+        "type": "header2",
+        "content": "Development IDE"
+    },
+    {
+        "name": "development_ide_activation",
+        "label": "Development IDE",
+        "type": "checkbox"
+    },
+    {
+        "type": "header2",
+        "content": "Model selection"
+    },
+    {
+        "name": "model_selection_activation",
+        "label": "Model selection",
+        "type": "checkbox"
+    },
+    {
+        "name": "user_guided_model_selection_activation",
+        "label": "User guided model selection",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["model_selection_activation:true"],
+            "requires": ["data_streaming_activation:true"]
+        }
+    },
+    {
+        "name": "model_training_and_update_activation",
+        "label": "Model training and update",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["model_selection_activation:true"]
+        }
+    },
+    {
+        "name": "model_visualization_for_evaluation_activation",
+        "label": "Model visualization for evaluation",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["model_selection_activation:true"]
+        }
+    },
+    {
+        "name": "xai_selection_activation",
+        "label": "XAI selection",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["model_selection_activation:true"]
+        }
+    },
+    {
+        "name": "visualize_explanations_activation",
+        "label": "Visualize explanations",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["xai_selection_activation:true"]
+        }
+    },
+    {
+        "name": "automl_activation",
+        "label": "AutoML",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["model_training_and_update_activation:true"]
+        }
+    },
+    {
+        "name": "hyperparameter_tuning_activation",
+        "label": "Hyperparameter tuning",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["model_training_and_update_activation:true"]
+        }
+    },
+    {
+        "name": "user_guided_model_selection",
+        "label": "Select User guided model selection",
+        "type": "dropdown",
+        "options": ["Conventional", "NN"]
+    },
+        {
+        "type": "header",
+        "content": "Data management"
+    },
+    {
+        "type": "header2",
+        "content": "Data collection"
+    },
+    {
+        "name": "data_collection_activation",
+        "label": "Data collection",
+        "type": "checkbox"
+    },
+    {
+        "name": "data_labeling_activation",
+        "label": "Data labeling",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["data_collection_activation:true"]
+        }
+    },    
+    {
+        "type": "header2",
+        "content": "ML feature extraction"
+    },
+    {
+        "name": "ml_feature_extraction_activation",
+        "label": "ML feature extraction",
+        "type": "checkbox"
+    },
+    {
+        "type": "header2",
+        "content": "Data preparation"
+    },
+    {
+        "name": "data_preparation_activation",
+        "label": "Data preparation",
+        "type": "checkbox"
+    },
+    {
+        "type": "header2",
+        "content": "Data visualization"
+    },
+    {
+        "name": "data_visualization_activation",
+        "label": "Data visualization",
+        "type": "checkbox"
+    },
+    {
+        "type": "header2",
+        "content": "Data streaming"
+    },
+    {
+        "name": "data_streaming_activation",
+        "label": "Data streaming",
+        "type": "checkbox"
+    },
+    {
+        "name": "live_data_and_drift_simulation_activation",
+        "label": "Live data and drift simulation",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["data_streaming_activation:true"]
+        }
+    },
+    {
+        "type": "header",
+        "content": "Versioning"
+    },
+    {
+        "type": "header2",
+        "content": "Data repository"
+    },
+    {
+        "name": "data_repository_activation",
+        "label": "Data repository",
+        "type": "checkbox"
+    },
+    {
+        "name": "s3_type_database_activation",
+        "label": "S3 Type Database",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["data_repository_activation:true"]
+        }
+    },
+    {
+    	"name": "memory_size",
+    	"label": "Define the memory size for the data repository in MB. Default 512",
+    	"type": "text",
+    	"placeholder": "512",
+    	"dependencies": {
+            "requires": ["s3_type_database_activation:true"]
+        }
+    },
+    {
+        "type": "header2",
+        "content": "Model registry"
+    },
+    {
+        "type": "header2",
+        "content": "Code repository"
+    },
+    {
+        "name": "code_repository_activation",
+        "label": "Code repository",
+        "type": "checkbox"
+    },
+    {
+        "type": "header2",
+        "content": "Feature Store"
+    },
+    {
+        "name": "feature_store_activation",
+        "label": "Feature Store",
+        "type": "checkbox"
+    },
+    {
+        "type": "header",
+        "content": "Observability"
+    },
+    {
+        "type": "header2",
+        "content": "Monitoring"
+    },
+    {
+        "name": "monitoring_activation",
+        "label": "Monitoring",
+        "type": "checkbox"
+    },
+    {
+        "name": "drift_detection_activation",
+        "label": "Drift Detection",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["monitoring_activation:true"]
+        }
+    },
+    {
+        "name": "explanatory_monitoring_activation",
+        "label": "Explanatory Monitoring",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["monitoring_activation:true"]
+        }
+    },
+    {
+        "type": "header2",
+        "content": "Testing"
+    },
+    {
+        "name": "testing_activation",
+        "label": "Testing",
+        "type": "checkbox"
+    },
+    {
+        "name": "ml_performance_gui_activation",
+        "label": "ML Performance GUI",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["testing_activation:true"]
+        }
+    },
+    {
+        "name": "live_testing_activation",
+        "label": "Live Testing",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["testing_activation:true"]
+        }
+    },
+    {
+        "type": "header2",
+        "content": "Incremental Explanatory Training"
+    },
+    {
+        "name": "incremental_explanatory_training_activation",
+        "label": "Incremental Explanatory Training",
+        "type": "checkbox"
+    },
+    {
+        "name": "inference_feedback_gui_for_image_activation",
+        "label": "Inference Feedback GUI for Image",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["incremental_explanatory_training_activation:true"]
+        }
+    },
+    {
+        "name": "xai_feedback_gui_for_image_activation",
+        "label": "XAI Feedback GUI for Image",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["inference_feedback_gui_for_image_activation:true"]
+        }
+    },
+    {
+        "name": "inference_feedback_gui_for_time_series_activation",
+        "label": "Inference Feedback GUI for Time Series",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["incremental_explanatory_training_activation:true"]
+        }
+    },
+    {
+        "name": "xai_feedback_gui_for_time_series_activation",
+        "label": "XAI Feedback GUI for Time Series",
+        "type": "checkbox",
+        "dependencies": {
+            "requires": ["inference_feedback_gui_for_time_series_activation:true"]
+        }
+    },
+    {
+        "type": "header",
+        "content": "Training-hardware provisioning"
+    },
+    {
+        "type": "header2",
+        "content": "Training cluster"
+    },
+    {
+        "name": "cpu_cluster_activation",
+        "label": "CPU cluster",
+        "type": "checkbox",
+        "constraints": {
+            "excludes": ["gpu_cluster_activation","fpga_cluster_activation","tpu_cluster_activation"]
+        }
+    },
+    {
+        "name": "gpu_cluster_activation",
+        "label": "GPU cluster",
+        "type": "checkbox",
+        "constraints": {
+            "excludes": ["cpu_cluster_activation","fpga_cluster_activation","tpu_cluster_activation"]
+        }
+    },
+    {
+        "name": "tpu_cluster_activation",
+        "label": "TPU cluster",
+        "type": "checkbox",
+        "constraints": {
+            "excludes": ["cpu_cluster_activation","fpga_cluster_activation","gpu_cluster_activation"]
+        }
+    },  
+    {
+        "name": "fpga_cluster_activation",
+        "label": "FPGA cluster",
+        "type": "checkbox",
+        "constraints": {
+            "excludes": ["cpu_cluster_activation","gpu_cluster_activation","tpu_cluster_activation"]
+        }
+    } 
+]

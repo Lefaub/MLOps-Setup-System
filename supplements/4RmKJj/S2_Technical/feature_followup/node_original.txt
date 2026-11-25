@@ -1,0 +1,9 @@
+FAIL streaming alone must not enable guided selection: Expected values to be strictly equal:
+PASS model selection alone insufficient
+PASS both prerequisites enable guided selection
+FAIL CPU excludes GPU: Expected values to be strictly equal:
+FAIL GPU excludes CPU: Expected values to be strictly equal:
+PASS no hardware selected allows either
+FAIL removing a selection releases the exclusion: Expected values to be strictly equal:
+FAIL conflicting restored state becomes a single selection: Expected values to be strictly equal:
+{"checks":8,"failed":5}

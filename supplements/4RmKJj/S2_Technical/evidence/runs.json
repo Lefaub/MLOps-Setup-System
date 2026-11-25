@@ -1,0 +1,188 @@
+{
+  "commit": "01209591e1d020dafc388a9b77b6985122308d6b",
+  "method": "offline; no generated code executed; no cluster contact",
+  "python": "3.13.5",
+  "jinja2": "3.1.6",
+  "markupsafe": "2.1.5",
+  "pyyaml": "6.0.2",
+  "system": "Linux",
+  "machine": "x86_64",
+  "services_in_archive": 13,
+  "pods_in_archive": 24,
+  "live_cluster_runs": 0,
+  "profile_input_fields": 44,
+  "byte_identical_baseline_repeats": true,
+  "runs": [
+    {
+      "profile": "time_series",
+      "profile_sha256": "ecdf5ce8d0abd0e3f5e24a9df29193f8b4154b55a2b93bcc384c749f293ef915",
+      "run": "recorded_1",
+      "inventory_sha256": "086d23ac8b839269f5c97ad5a015c184d5deccf40720a77bd8de5c7a20693493",
+      "platform_files": 22,
+      "pipeline_files": 11,
+      "static_inspection": {
+        "manifest_files": 7,
+        "full_yaml_documents": 15,
+        "empty_or_comment_only": [
+          "python/data_repository/processing.py",
+          "python/data_streaming/processing.py",
+          "python/model_registry/processing.py"
+        ],
+        "invalid_yaml": [],
+        "invalid_pipeline_python": [],
+        "nonempty_python_parsed": 4
+      },
+      "profile_rules": "pass",
+      "negative_controls": "pass",
+      "selected_manifests": "pass",
+      "scenario_branch": "pass",
+      "endpoint_binding": "pass",
+      "endpoint_consumer": "pass"
+    },
+    {
+      "profile": "time_series",
+      "profile_sha256": "ecdf5ce8d0abd0e3f5e24a9df29193f8b4154b55a2b93bcc384c749f293ef915",
+      "run": "recorded_2",
+      "inventory_sha256": "086d23ac8b839269f5c97ad5a015c184d5deccf40720a77bd8de5c7a20693493",
+      "platform_files": 22,
+      "pipeline_files": 11,
+      "static_inspection": {
+        "manifest_files": 7,
+        "full_yaml_documents": 15,
+        "empty_or_comment_only": [
+          "python/data_repository/processing.py",
+          "python/data_streaming/processing.py",
+          "python/model_registry/processing.py"
+        ],
+        "invalid_yaml": [],
+        "invalid_pipeline_python": [],
+        "nonempty_python_parsed": 4
+      },
+      "profile_rules": "pass",
+      "negative_controls": "pass",
+      "selected_manifests": "pass",
+      "scenario_branch": "pass",
+      "endpoint_binding": "pass",
+      "endpoint_consumer": "pass"
+    },
+    {
+      "profile": "time_series",
+      "profile_sha256": "ecdf5ce8d0abd0e3f5e24a9df29193f8b4154b55a2b93bcc384c749f293ef915",
+      "run": "changed_address",
+      "inventory_sha256": "e03a6d6f431c3a0144144a491b7e330566f0c5e85288049cef6ddb69066d1540",
+      "platform_files": 22,
+      "pipeline_files": 11,
+      "static_inspection": {
+        "manifest_files": 7,
+        "full_yaml_documents": 15,
+        "empty_or_comment_only": [
+          "python/data_repository/processing.py",
+          "python/data_streaming/processing.py",
+          "python/model_registry/processing.py"
+        ],
+        "invalid_yaml": [],
+        "invalid_pipeline_python": [],
+        "nonempty_python_parsed": 4
+      },
+      "profile_rules": "pass",
+      "negative_controls": "pass",
+      "selected_manifests": "pass",
+      "scenario_branch": "pass",
+      "endpoint_binding": "pass",
+      "endpoint_consumer": "pass"
+    },
+    {
+      "profile": "visual_inspection",
+      "profile_sha256": "aaf536a0a011100ad449964a21b8af2024c0a13803792977c1ceaa5737137348",
+      "run": "recorded_1",
+      "inventory_sha256": "086d23ac8b839269f5c97ad5a015c184d5deccf40720a77bd8de5c7a20693493",
+      "platform_files": 31,
+      "pipeline_files": 14,
+      "static_inspection": {
+        "manifest_files": 10,
+        "full_yaml_documents": 21,
+        "empty_or_comment_only": [
+          "python/data_repository/processing.py",
+          "python/data_streaming.sh",
+          "python/data_streaming/processing.py",
+          "python/model_registry.sh",
+          "python/model_registry/processing.py",
+          "python/model_selection.sh",
+          "python/xai_serving.sh",
+          "python/xai_serving/processing.py"
+        ],
+        "invalid_yaml": [],
+        "invalid_pipeline_python": [],
+        "nonempty_python_parsed": 5
+      },
+      "profile_rules": "pass",
+      "negative_controls": "pass",
+      "selected_manifests": "pass",
+      "scenario_branch": "pass",
+      "endpoint_binding": "pass",
+      "endpoint_consumer": "pass"
+    },
+    {
+      "profile": "visual_inspection",
+      "profile_sha256": "aaf536a0a011100ad449964a21b8af2024c0a13803792977c1ceaa5737137348",
+      "run": "recorded_2",
+      "inventory_sha256": "086d23ac8b839269f5c97ad5a015c184d5deccf40720a77bd8de5c7a20693493",
+      "platform_files": 31,
+      "pipeline_files": 14,
+      "static_inspection": {
+        "manifest_files": 10,
+        "full_yaml_documents": 21,
+        "empty_or_comment_only": [
+          "python/data_repository/processing.py",
+          "python/data_streaming.sh",
+          "python/data_streaming/processing.py",
+          "python/model_registry.sh",
+          "python/model_registry/processing.py",
+          "python/model_selection.sh",
+          "python/xai_serving.sh",
+          "python/xai_serving/processing.py"
+        ],
+        "invalid_yaml": [],
+        "invalid_pipeline_python": [],
+        "nonempty_python_parsed": 5
+      },
+      "profile_rules": "pass",
+      "negative_controls": "pass",
+      "selected_manifests": "pass",
+      "scenario_branch": "pass",
+      "endpoint_binding": "pass",
+      "endpoint_consumer": "pass"
+    },
+    {
+      "profile": "visual_inspection",
+      "profile_sha256": "aaf536a0a011100ad449964a21b8af2024c0a13803792977c1ceaa5737137348",
+      "run": "changed_address",
+      "inventory_sha256": "e03a6d6f431c3a0144144a491b7e330566f0c5e85288049cef6ddb69066d1540",
+      "platform_files": 31,
+      "pipeline_files": 14,
+      "static_inspection": {
+        "manifest_files": 10,
+        "full_yaml_documents": 21,
+        "empty_or_comment_only": [
+          "python/data_repository/processing.py",
+          "python/data_streaming.sh",
+          "python/data_streaming/processing.py",
+          "python/model_registry.sh",
+          "python/model_registry/processing.py",
+          "python/model_selection.sh",
+          "python/xai_serving.sh",
+          "python/xai_serving/processing.py"
+        ],
+        "invalid_yaml": [],
+        "invalid_pipeline_python": [],
+        "nonempty_python_parsed": 5
+      },
+      "profile_rules": "pass",
+      "negative_controls": "pass",
+      "selected_manifests": "pass",
+      "scenario_branch": "pass",
+      "endpoint_binding": "pass",
+      "endpoint_consumer": "pass"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+PASS streaming alone must not enable guided selection
+PASS model selection alone insufficient
+PASS both prerequisites enable guided selection
+PASS CPU excludes GPU
+PASS GPU excludes CPU
+PASS no hardware selected allows either
+PASS removing a selection releases the exclusion
+PASS conflicting restored state becomes a single selection
+{"checks":8,"failed":0}

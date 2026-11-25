@@ -1,0 +1,262 @@
+{
+  "branch": "academia/kubernetes-live-smoke",
+  "workflow": "Headless application live smoke test",
+  "observed_on": "2026-11-24",
+  "note": "Enumerated application workflow runs on this branch. Machine-extracted statuses/checks from per-run evidence printed in Actions job logs. Earlier storage-only workflow is excluded. These are development attempts, not independent reliability trials.",
+  "runs": [
+    {
+      "run": 45390543301,
+      "job": 138432746968,
+      "url": "https://github.com/Lefaub/MLOps-Setup-System/actions/runs/45390543301",
+      "workflow_commit": "99f4b74acd5d79deabdd5c6786970b91b3416993",
+      "generator_commit": "01209591e1d020dafc388a9b77b6985122308d6b",
+      "event": "push",
+      "workflow_conclusion": "failure",
+      "attempt": 1,
+      "scope": "both",
+      "cases": {
+        "time_series": {
+          "started_utc": "2026-11-24T12:09:02+00:00",
+          "ended_utc": "2026-11-24T12:09:03+00:00",
+          "stage": "generate",
+          "status": "failed",
+          "orchestration_checks": {},
+          "application_checks": {},
+          "failure_class": "ValueError"
+        },
+        "visual_inspection": {
+          "started_utc": "2026-11-24T12:09:03+00:00",
+          "ended_utc": "2026-11-24T12:09:03+00:00",
+          "stage": "generate",
+          "status": "failed",
+          "orchestration_checks": {},
+          "application_checks": {},
+          "failure_class": "ValueError"
+        }
+      },
+      "observation": "Both profiles stopped in generate with ValueError: dictionary update sequence element #0 has length 32; 2 is required."
+    },
+    {
+      "run": 45390896384,
+      "job": 138433996662,
+      "url": "https://github.com/Lefaub/MLOps-Setup-System/actions/runs/45390896384",
+      "workflow_commit": "a173ad77691407a2ac8f3f68902b68c51a7240a9",
+      "generator_commit": "01209591e1d020dafc388a9b77b6985122308d6b",
+      "event": "push",
+      "workflow_conclusion": "failure",
+      "attempt": 1,
+      "scope": "both",
+      "cases": {
+        "time_series": {
+          "started_utc": "2026-11-24T12:11:25+00:00",
+          "ended_utc": "2026-11-24T12:21:27+00:00",
+          "stage": "deploy_services",
+          "status": "failed",
+          "orchestration_checks": {
+            "profile_validation_and_generation": true
+          },
+          "application_checks": {},
+          "failure_class": "RuntimeError"
+        },
+        "visual_inspection": {
+          "started_utc": "2026-11-24T12:21:27+00:00",
+          "ended_utc": "2026-11-24T12:31:28+00:00",
+          "stage": "deploy_services",
+          "status": "failed",
+          "orchestration_checks": {
+            "profile_validation_and_generation": true
+          },
+          "application_checks": {},
+          "failure_class": "RuntimeError"
+        }
+      },
+      "observation": "For each profile kubectl rollout status deployment/mlflow --timeout=720s exited 1. This is a configured maximum, not an observed duration. The logs do not establish the pod-level cause."
+    },
+    {
+      "run": 45395643264,
+      "job": 138450572280,
+      "url": "https://github.com/Lefaub/MLOps-Setup-System/actions/runs/45395643264",
+      "workflow_commit": "849c7f91775e94c7b4e76f0a0632fe9f945d4a6d",
+      "generator_commit": "01209591e1d020dafc388a9b77b6985122308d6b",
+      "event": "push",
+      "workflow_conclusion": "success",
+      "attempt": 1,
+      "scope": "both",
+      "cases": {
+        "time_series": {
+          "started_utc": "2026-11-24T12:41:11+00:00",
+          "ended_utc": "2026-11-24T12:42:17+00:00",
+          "stage": "headless_application",
+          "status": "application_smoke_pass",
+          "orchestration_checks": {
+            "fresh_endpoint_binding": true,
+            "headless_application_path": true,
+            "kubernetes_service_rollout": true,
+            "profile_validation_and_generation": true
+          },
+          "application_checks": {
+            "application_evidence_storage_round_trip": true,
+            "feedback_capture": true,
+            "feedback_retraining": true,
+            "generated_storage_client_execution": true,
+            "gui_bypass_configuration": true,
+            "inference": true,
+            "model_registry_round_trip": true,
+            "model_training": true,
+            "storage_round_trip": true,
+            "xai": true
+          }
+        },
+        "visual_inspection": {
+          "started_utc": "2026-11-24T12:42:17+00:00",
+          "ended_utc": "2026-11-24T12:43:10+00:00",
+          "stage": "headless_application",
+          "status": "application_smoke_pass",
+          "orchestration_checks": {
+            "fresh_endpoint_binding": true,
+            "headless_application_path": true,
+            "kubernetes_service_rollout": true,
+            "profile_validation_and_generation": true
+          },
+          "application_checks": {
+            "application_evidence_storage_round_trip": true,
+            "feedback_capture": true,
+            "feedback_retraining": true,
+            "generated_storage_client_execution": true,
+            "gui_bypass_configuration": true,
+            "inference": true,
+            "model_registry_round_trip": true,
+            "model_training": true,
+            "storage_round_trip": true,
+            "xai": true
+          }
+        }
+      },
+      "observation": "Both profiles completed all four orchestration checks and all ten application checks."
+    },
+    {
+      "run": 45395678860,
+      "job": 138450701299,
+      "url": "https://github.com/Lefaub/MLOps-Setup-System/actions/runs/45395678860",
+      "workflow_commit": "849c7f91775e94c7b4e76f0a0632fe9f945d4a6d",
+      "generator_commit": "01209591e1d020dafc388a9b77b6985122308d6b",
+      "event": "workflow_dispatch",
+      "workflow_conclusion": "success",
+      "attempt": 1,
+      "scope": "both",
+      "cases": {
+        "time_series": {
+          "started_utc": "2026-11-24T12:41:21+00:00",
+          "ended_utc": "2026-11-24T12:42:27+00:00",
+          "stage": "headless_application",
+          "status": "application_smoke_pass",
+          "orchestration_checks": {
+            "fresh_endpoint_binding": true,
+            "headless_application_path": true,
+            "kubernetes_service_rollout": true,
+            "profile_validation_and_generation": true
+          },
+          "application_checks": {
+            "application_evidence_storage_round_trip": true,
+            "feedback_capture": true,
+            "feedback_retraining": true,
+            "generated_storage_client_execution": true,
+            "gui_bypass_configuration": true,
+            "inference": true,
+            "model_registry_round_trip": true,
+            "model_training": true,
+            "storage_round_trip": true,
+            "xai": true
+          }
+        },
+        "visual_inspection": {
+          "started_utc": "2026-11-24T12:42:27+00:00",
+          "ended_utc": "2026-11-24T12:43:16+00:00",
+          "stage": "headless_application",
+          "status": "application_smoke_pass",
+          "orchestration_checks": {
+            "fresh_endpoint_binding": true,
+            "headless_application_path": true,
+            "kubernetes_service_rollout": true,
+            "profile_validation_and_generation": true
+          },
+          "application_checks": {
+            "application_evidence_storage_round_trip": true,
+            "feedback_capture": true,
+            "feedback_retraining": true,
+            "generated_storage_client_execution": true,
+            "gui_bypass_configuration": true,
+            "inference": true,
+            "model_registry_round_trip": true,
+            "model_training": true,
+            "storage_round_trip": true,
+            "xai": true
+          }
+        }
+      },
+      "observation": "Both profiles completed all four orchestration checks and all ten application checks."
+    },
+    {
+      "run": 45399032543,
+      "job": 138462451743,
+      "url": "https://github.com/Lefaub/MLOps-Setup-System/actions/runs/45399032543",
+      "workflow_commit": "33488eda3d8bb0018296c30e7abc5d46531cad43",
+      "generator_commit": "01209591e1d020dafc388a9b77b6985122308d6b",
+      "event": "push",
+      "workflow_conclusion": "success",
+      "attempt": 1,
+      "scope": "both",
+      "cases": {
+        "time_series": {
+          "started_utc": "2026-11-24T13:02:27+00:00",
+          "ended_utc": "2026-11-24T13:03:18+00:00",
+          "stage": "headless_application",
+          "status": "application_smoke_pass",
+          "orchestration_checks": {
+            "fresh_endpoint_binding": true,
+            "headless_application_path": true,
+            "kubernetes_service_rollout": true,
+            "profile_validation_and_generation": true
+          },
+          "application_checks": {
+            "application_evidence_storage_round_trip": true,
+            "feedback_capture": true,
+            "feedback_retraining": true,
+            "generated_storage_client_execution": true,
+            "gui_bypass_configuration": true,
+            "inference": true,
+            "model_registry_round_trip": true,
+            "model_training": true,
+            "storage_round_trip": true,
+            "xai": true
+          }
+        },
+        "visual_inspection": {
+          "started_utc": "2026-11-24T13:03:18+00:00",
+          "ended_utc": "2026-11-24T13:04:01+00:00",
+          "stage": "headless_application",
+          "status": "application_smoke_pass",
+          "orchestration_checks": {
+            "fresh_endpoint_binding": true,
+            "headless_application_path": true,
+            "kubernetes_service_rollout": true,
+            "profile_validation_and_generation": true
+          },
+          "application_checks": {
+            "application_evidence_storage_round_trip": true,
+            "feedback_capture": true,
+            "feedback_retraining": true,
+            "generated_storage_client_execution": true,
+            "gui_bypass_configuration": true,
+            "inference": true,
+            "model_registry_round_trip": true,
+            "model_training": true,
+            "storage_round_trip": true,
+            "xai": true
+          }
+        }
+      },
+      "observation": "Both profiles completed all four orchestration checks and all ten application checks."
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "paper_generator": "01209591e1d020dafc388a9b77b6985122308d6b",
+  "fix_commit": "9f0f76208897b28fb1eeda6f29cbeb207b992eb8",
+  "ci_commit": "fd779c508cafa32748cf312d118bdb1174bf3bd7",
+  "ci_run": 45452289178,
+  "ci_job": 138652320049,
+  "files": [
+    {
+      "path": "original/html_generation.py",
+      "git_blob": "388b00edd506851b807b7aa5d82e12925268444f"
+    },
+    {
+      "path": "fixed/html_generation.py",
+      "git_blob": "4ba810c8bfc426c2891eb6bc691f9b132758905d"
+    },
+    {
+      "path": "fixed/feature_model.fm",
+      "git_blob": "d2bf0e95720dab2c8f50be164aa0db5e8bd2a47d"
+    },
+    {
+      "path": "test_dependencies.cjs",
+      "git_blob": "18dd89ea979e16eb56ff1dec106a5528d168a7f2"
+    },
+    {
+      "path": "original/feature_model.fm",
+      "git_blob": "c1dbd1966193c36716fa68c672ace6d71a932602"
+    },
+    {
+      "path": "LICENSE",
+      "git_blob": "3b1d7d22ad646d7f0c39f70253d4aad783ecbe67"
+    }
+  ]
+}

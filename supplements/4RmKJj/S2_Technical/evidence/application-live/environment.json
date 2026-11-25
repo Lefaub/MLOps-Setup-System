@@ -1,0 +1,51 @@
+{
+  "run": 45399032543,
+  "job": 138462451743,
+  "workflow_commit": "33488eda3d8bb0018296c30e7abc5d46531cad43",
+  "generator_commit": "01209591e1d020dafc388a9b77b6985122308d6b",
+  "job_url": "https://github.com/Lefaub/MLOps-Setup-System/actions/runs/45399032543/job/138462451743",
+  "source_files": [
+    "evidence.json",
+    "runner.txt"
+  ],
+  "job_log_values": {
+    "os": "Ubuntu 24.04.5",
+    "architecture": "linux/amd64",
+    "runner_image": "ubuntu-24.04",
+    "runner_image_version": "20261116.133.1"
+  },
+  "cluster": {
+    "provider": "kind",
+    "kind_version": "0.27.0",
+    "node_image": "kindest/node:v1.32.2@sha256:f226345927d7e348497136874b6d207e0b32cc52154ad8323129352923a3142f",
+    "configured_topology": "kind default: one control-plane node; no custom node configuration supplied",
+    "per_profile_namespaces": {
+      "time_series": "application-ts-80c7ff9b",
+      "visual_inspection": "application-img-4987a715"
+    },
+    "client": "v1.37.2",
+    "server": "v1.32.2"
+  },
+  "host_capacity": {
+    "cpu_model": null,
+    "vcpu_count": null,
+    "ram_bytes": null,
+    "allocatable_node_resources": null,
+    "reason": "No per-job measurement in retained output; not inferred from typical runner specifications or offline replay host."
+  },
+  "image_digests": {
+    "client": "python@sha256:a0e2dd78cc679ddfffea960fe45ecfcff9ac2f68d67917a0edfcde5c2100151b",
+    "registry": "ghcr.io/mlflow/mlflow@sha256:ae2b2faf8c8ce2bd356e99f268eb2fa652f6bcf9c7c27c84241d519d4c454ce7",
+    "server": "docker.io/jcometki/minio@sha256:3f97c5651cb6662b880c787a232b6b34fec8d8922e08d6617b25d241a21164bb"
+  },
+  "python_probe_direct_versions": {
+    "joblib": "1.4.2",
+    "minio": "7.2.15",
+    "mlflow": "2.16.2",
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "pillow": "11.0.0",
+    "scikit-learn": "1.5.2",
+    "urllib3": "2.3.0"
+  }
+}
